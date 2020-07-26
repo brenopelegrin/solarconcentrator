@@ -1,0 +1,35 @@
+[anim] {
+    opacity: 0;
+    transition: .3s;
+}
+
+[anim="top"] {
+    transform: translate3d(0px, -50px, 0);
+}
+
+[anim="top 1.5"] {
+    transform: translate3d(0px, -50px, 0);
+    transition: 1.5s;
+}
+
+[anim="top 2"] {
+    transform: translate3d(0px, -50px, 0);
+    transition: 2s;
+}
+
+[anim="bottom"] {
+    transform: translate3d(-50px, 0, 0);
+}
+
+[anim="left"] {
+    transform: translate3d(-50px, 0, 0);
+}
+
+[anim="right"] {
+    transform: translate3d(50px, 0, 0);
+}
+
+[anim].animate {
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
+}

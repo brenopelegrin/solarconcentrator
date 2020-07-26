@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap');
+
+*  {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: white;
+    margin: 0px 0 0 0;
+    width: 100%;
+    height: 100%;
+}
+
+body::-webkit-scrollbar {
+  width: 1em;
+}
+ 
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+/*Scroll-Bar|*/
+
+.header-links {
+    display: inline-block;
+    padding-left: 30px;
+}
+
+/*Area de estilo do header*/
+header {
+    display: flex;
+    height: 16vh;
+    margin: 0px;
+    background: radial-gradient(ellipse at center,#19d33bd8 1%,#1fa51fe1 100%);
+    justify-content: flex-start;
+    align-content: flex-start;
+    background-color: aquamarine;
+    border-style: none none groove none;
+    border-color: rgba(0, 131, 253, 0.3);
+}
+
+#logo-solar {
+    width: 110px;
+    height: 100px;
+}
+
+@keyframes identifier {
+  from {color: red;}
+  to {color: blue;}
+  0% { text-shadow: 4px 8px 10px black; }
+  30% { text-shadow: 14px 12px 15px black; }
+  68%, 72% { text-shadow: 24px 20px 15px black; }
+  100% { text-shadow: 34px 17px 25px black; }
+}
+
+@keyframes mymove {
+  80% {text-shadow: 10px 20px 30px black;}
+}
+
+.logo-name {
+    text-shadow: 1px 1px 2px black;
+    color:yellow;
+    margin-right: 50px;
+}
+
+.logo-name:hover {
+    /*animation: identifier 5s infinite;*/
+}
+
+h2.title1 {
+    text-decoration: dashed;
+    height: 25%;
+    display: block;
+    margin-block-start: 10px;
+    margin-block-end: 10px;
+    font-weight: bold;
+    font-size: 30px;
+    overflow-wrap: break-word;
+}
+
+h3.title2 {
+    float:left;
+    display: block;
+    height: 30px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 17px;
+    text-decoration: none;
+}
+
+div.pages {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+/*Area intended the header of links, hyper text*/
+div.pages a {
+    display: flex;
+    flex: 1;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 25px;
+    text-decoration: none;
+    border: 2px solid rgb(166, 245, 19, 0.000001);
+    color: rgb(245, 245, 245);
+}
+
+/*Area intended the header of links, event of link visited*/
+header a:visited {
+    /*color: rgb(47, 106, 194);*/
+    color: white;
+}
+
+/*Area intended the header of links, events of mouse in links*/
+header a:hover, header a:active {
+    border: 2px groove rgb(166, 245, 19, 0.3);
+    -webkit-transition: 0.5s ease-in;
+    -moz-transition: 0.5s ease-in;
+    -o-transition: 0.5s ease-in;
+    transition: 0.5s ease-in;
+    background-color: rgb(166, 245, 19, 0.3);
+    text-decoration: underline;
+}
+
+
+footer#inferior {
+    background-color: aquamarine;
+    border-style: groove none none none;
+    border-color: rgba(0, 131, 253, 0.3);
+    height: 120px;
+    display: block;
+    /*
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    */
+}
+
+footer#inferior h4 {
+    display:block;
+    height: 25px;
+    width: max-content;
+    margin-block-start: 1px;
+    margin-block-end: 10px;
+    margin-left: 6px;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    overflow-wrap: break-word;
+}
+
+footer#inferior h5 {
+    width: max-content;
+    display: inline-block;
+    float: inline-start;
+    text-align: left;
+    margin-left: 6px;
+    margin-block-start: 4px;
+    height: 10%;
+    color: rgba(89, 0, 255, 0.555);
+    text-shadow: 1px 1px 2px black;
+}
+
+footer#inferior #logo-solar-footer {
+    display: inline-block;
+    float: right;
+    vertical-align: top;
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+}
