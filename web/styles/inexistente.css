@@ -1,0 +1,32 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+a{
+    text-decoration: none;
+}
+*{
+    box-sizing: border-box;
+}
+#alert{
+    max-width:200px;
+    max-height:150px;
+    width: auto;
+    height: auto;
+}
+.bg-home{
+    width: 100%;
+    padding: 30px 3%;
+    text-align: center;
+    background-color: #ffffff;
+    color: #181717;
+}
+@media(max-width:620px){
+    #alert{
+        max-width: 60%;
+        max-height: 60%;
+        width: auto;
+        height: auto;
+    }
+}

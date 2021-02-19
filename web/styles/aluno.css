@@ -1,0 +1,57 @@
+.engloba-conteudo{
+    padding: 20px;
+}
+.aluno-p{
+    width: 90%;
+    color: rgb(255, 255, 255);
+}
+.titulo-aluno{
+    color: #fff;
+    font-size: xx-large;
+    letter-spacing: 2px;
+    font-weight:bolder;
+    text-shadow: 1px 1px 2px #000 !important;
+}
+.div-image-aluno{
+    margin: auto;
+}
+.image-aluno{
+    max-width: 300px; /*mudei 50*/
+    max-height: 300px; /*mudei 50*/
+    width: auto;
+    height: auto;
+}
+#le-pagina{
+    display: flex;
+    padding: 10px;
+    justify-content:center;
+}
+
+@media(max-width:768px){
+    #le-pagina{
+        display: flex;
+        flex-direction: column;
+    }
+    .engloba-conteudo{
+        width: 100%;
+    }
+    .aluno-p{
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+    .titulo-aluno{
+        text-align: center;
+    }
+    .alunoinfo{
+        display:block;
+    }
+    .div-image-aluno{
+        display: flex;
+        justify-items: center;
+        align-items: stretch;
+    }
+    .image-aluno{
+        align-self: center;
+    }
+}
