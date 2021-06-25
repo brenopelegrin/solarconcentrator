@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--Fonte-->
+        <link rel="stylesheet" href="/files/font-awesome.min.css">
+        <link rel="stylesheet" href="/files/roboto.css">
+        <link rel="stylesheet" href="style.css">
+    <title>Configuração ESP32</title>
+</head>
+
+<body>
+    <header class="cabeca">
+        <div class="bonito">
+            <img src="/files/gota.png" alt="Natura" id="logo">
+            <img src="/files/header_linhas.png" alt="Natura" id="flecha-separa">
+            <div class="mesma-linha">
+                <div class="titulo-header">
+                    <a href="/home" id="titulo-tag-a">
+                        <h1 class="titulo especial">Concentrador</h1>
+                        <h1 class="titulo especial" id="solarTitle">Solar</h1>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="englobaMain">
+        <div class="engloba-img-widget-data">
+            <div class="engloba-imgdata">
+                <img src="/files/error.png" alt="Cadeado">
+            </div>
+            <div class="engloba-data-and-type">
+                <h4 class="type-widget">ERRO</h4>
+                <h2 class="data-widget">Falha na conexão. Rede ou credenciais inválidas.</h2>
+            </div>
+        </div>
+        <div class="engloba-chart-consulta">
+            <div class="engloba-consulta">
+                <div class="header-consulta">
+                    <img src="/files/icon_consulta.png" alt="consulta">
+                    <h3>Configuração inicial</h3>
+                </div>
+                <div class="body-consulta">
+                    <form action="/config" method="get">
+                        <div>
+                            <div id="englobaSSID">
+                                <label for="ssid">Nome da rede/SSID</label>
+                                <input type="text" name="ssid_host" id="ssid_host" required />
+                            </div>
+                            <div id="englobaPassword">
+                                <label for="password">Senha da rede</label>
+                                <input type="password" name="pwd_host" id="pwd_host" required />
+                            </div>
+                            <div id="englobaMasterKey">
+                                <label for="master_key">Chave de autenticação</label>
+                                <input type="password" name="key" id="key" required />
+                            </div>
+                            <input type="submit" value="Enviar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

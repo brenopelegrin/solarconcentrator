@@ -1,0 +1,413 @@
+@font-face {
+    font-family: "Metropolis-Light";
+    src: url("/files/Metropolis-Light.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("/files/roboto-v27-latin-regular.ttf") format("truetype");
+}
+
+*{
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif !important;
+    scroll-behavior: smooth;
+}
+body{
+    top: 0;
+    margin: 0;
+    padding: 0px;
+    /*font-family: 'Noto Sans JP', sans-serif !important;*/
+    font-family: 'Roboto', sans-serif !important;
+    display: block;
+    background-color: #EEE;
+}
+
+
+a {
+    text-decoration: none;
+    padding: 0 1rem;
+    color: #000;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    transition: all .3s;
+	z-index: 1;
+}
+
+header {
+    top: 0;
+    z-index:3;
+    position: fixed;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fafafa;
+    box-shadow: 0 0 0.5em black;
+}
+header > div.bonito {
+    display: flex;
+    width: 400px;
+    justify-content: space-around;
+}
+.mesma-linha {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+a#titulo-tag-a {
+    text-decoration: none;
+    padding: 0;
+    width: auto;
+    height: auto;
+    transition: none;
+	position:static;
+	overflow:auto;
+	z-index: 1;
+    display: block;
+}
+
+header > div.bonito > div.mesma-linha > div.titulo-header > a > h1.titulo {
+    margin: 0;
+    font-family: 'Metropolis-Light', sans-serif !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #000;
+    font-size: 1.5rem;
+    /*text-shadow: 2px 2px 1px #000;*/
+}
+#solarTitle{
+    color: #fff;
+    text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px
+}
+.strong{
+    font-weight: bold;
+}
+#logo{
+    max-width: 3.6rem;
+    max-height: 3.6rem;
+    width: auto;
+    height: auto;
+    align-self: center;
+}
+#flecha-separa{
+    max-width: 3rem;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    z-index:4;
+}
+/*Mobile*/
+.menu-mobile{
+    width: 100%;
+    height: auto;
+    padding: 0;
+    display: none;
+    transition: opacity 1.5s ease-out;
+    opacity: 0;
+}
+.menu-mobile ul.menu-ul-mobile{
+    width: 100%;
+    display: none;
+    transition: opacity 1.5s ease-out;
+    opacity: 0;
+    padding: 0;
+    margin: 0 0 1rem 0;
+}
+
+div#linha{
+    width: 100%;
+    height: 1px;
+    margin: 0 0 1rem 0;
+	box-shadow: inset 0 -1rem 0 0 black;
+}
+
+img.risco3 {
+    display: none;
+    transition: transform 0.7s;
+    max-width: 50px;
+    max-height: 50px;
+    width: auto;
+    height: auto;
+}
+img.risco3:hover{
+    cursor:pointer;
+}
+
+/*******************/
+
+div.englobaMain {
+    padding-top: 8rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+
+div.engloba-img-widget-data {
+    display: flex;
+    flex-direction: row;
+    -webkit-box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+    box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+    margin-bottom: 1rem;
+    width: 40%;
+    animation: 1s ease-out 0s 1 slideInFromLeft;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+div.engloba-img-widget-data > div.engloba-imgdata {
+    background-color: #E1E1E1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+}
+
+
+div.engloba-img-widget-data > div.engloba-imgdata > img {
+    max-width: 2rem;
+    max-height: 2rem;
+    width: auto;
+    height: auto;
+    align-self: center;
+}
+
+div.engloba-data-and-type {
+    padding: 0.4rem;
+    padding-left: 0.5rem;
+    padding-left: 1rem;
+    background-color: #fafafa;
+    width: 100%;
+}
+
+div.engloba-data-and-type > h4.type-widget {
+    font-size: 0.8rem;
+    margin: 0;
+    font-family: 'Metropolis-Light', sans-serif !important;
+    font-weight: 100;
+}
+
+div.engloba-data-and-type > h2.data-widget {
+    padding-top: 0.1rem;
+    font-weight: bold;
+    font-family: 'Metropolis-Light', sans-serif !important;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+
+
+.engloba-chart-consulta {
+    align-self: center;
+    display: flex;
+    background-color: #f5f5f5;
+    width: 40%;
+    flex-direction: column;
+    -webkit-box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+    box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+}
+
+
+div.header-consulta {
+    display: flex;
+    align-self: flex-start;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #FAFAFA;
+    width: 100%;
+    padding: .5rem 1rem;
+    -webkit-box-shadow: 0px 5px 6px 0px rgba(50, 50, 50, 0.26);
+    -moz-box-shadow: 0px 5px 6px 0px rgba(50, 50, 50, 0.26);
+    box-shadow: 0px 5px 6px 0px rgba(50, 50, 50, 0.26);
+    z-index: 2;
+}
+
+div.header-consulta > img {
+    max-width: 2rem;
+    max-height: 2rem;
+    width: auto;
+    height: auto;
+    align-self: center;
+}
+
+div.header-consulta > h3 {
+    margin: 0;
+    padding-left: 0.5rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    font-family: 'Metropolis-Light', sans-serif !important;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form > div {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+form > div > input:last-child {
+    align-self: center;
+    padding: 0.7rem 0;
+    margin: 1rem 0;
+    width: 8rem;
+}
+
+form > div > div {
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+form > div > div > label {
+    font-size: 1.1rem;
+    padding-bottom: 0.6rem;
+    font-family: 'Metropolis-Light', sans-serif !important;
+    align-self: flex-start;
+}
+
+form > div > div > input {
+    align-self: flex-start;
+    width: 100%;
+}
+
+input[type=submit] {
+    /* remove default behavior */
+    appearance:none;
+    -webkit-appearance:none;
+
+    /* usual styles */
+    padding:10px;
+    border:none;
+    background-color:#3F51B5;
+    color:#fff;
+    font-weight:600;
+    border-radius:5px;
+    width:100%;
+}
+
+div#englobaSSID:focus-within label {
+    color:rgb(25, 55, 223);
+}
+
+div#englobaPassword:focus-within label {
+    color:rgb(25, 55, 223);
+}
+
+div#englobaMasterKey:focus-within label {
+    color:rgb(25, 55, 223);
+}
+
+@media screen and (max-height: 400px){
+    div.titulo-header {
+        font-size: 2vh;
+    }
+
+    img#logo {
+        max-width: 2.5rem;
+        max-height: 2.5rem;
+    }
+
+    div.titulo-header > a > h1 {
+        font-size: 1.2rem !important;
+    }
+}
+
+@media(max-width:780px){
+    .titulo-header {
+        font-size: 1rem;
+    }
+    header{
+        display: block;
+    }
+    header > div.bonito {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+    header > div.bonito > img#logo{
+        max-width: 3.5rem;
+        max-height: 3.5rem;
+        width: auto;
+        height: auto;
+        align-self: center;
+    }
+    .mesma-linha{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
+    img.risco3{
+        display: flex;
+    }
+    div.engloba-img-widget-data {
+        width: 60%;
+    }
+    .engloba-chart-consulta {
+        width: 60%;
+    }
+}
+@media(max-width:520px){
+    header > div.bonito > img#logo{
+        max-width: 2.2rem;
+        max-height: 2.2rem;
+    }
+    #flecha-separa{
+        max-width: 2rem;
+        max-height: 100%;
+    }
+    header > div.bonito > div.mesma-linha > div.titulo-header > a > h1 {
+        font-size: 0.95rem !important;
+    }
+    img.risco3 {
+        max-width: 1.5rem;
+        max-height: 1.5rem;
+    }
+    .mesma-linha{
+        width: 65%;
+        justify-content:space-around;
+    }
+}
+
+@media(max-width:480px){
+    div.engloba-img-widget-data {
+        width: 80%;
+    }
+    .engloba-chart-consulta {
+        width: 80%;
+    }
+}
+
+@media(max-width:300px) {
+}
