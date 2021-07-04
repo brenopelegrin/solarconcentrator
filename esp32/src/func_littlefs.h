@@ -3,30 +3,30 @@
 #include <LITTLEFS.h>
 
 void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
-    Serial.printf("Listing directory: %s\r\n", dirname);
+    Serial.printf("Listando diretorio: %s\r\n", dirname);
 
     File root = fs.open(dirname);
     if(!root){
-        Serial.println("- failed to open directory");
+        Serial.println("- falha ao abrir o diretorio");
         return;
     }
     if(!root.isDirectory()){
-        Serial.println(" - not a directory");
+        Serial.println(" - nao e um diretorio");
         return;
     }
 
     File file = root.openNextFile();
     while(file){
         if(file.isDirectory()){
-            Serial.print("  DIR : ");
+            Serial.print("  DIRETORIO : ");
             Serial.println(file.name());
             if(levels){
                 listDir(fs, file.name(), levels -1);
             }
         } else {
-            Serial.print("  FILE: ");
+            Serial.print("  ARQUIVO: ");
             Serial.print(file.name());
-            Serial.print("\tSIZE: ");
+            Serial.print("\tTAMANHO: ");
             Serial.println(file.size());
         }
         file = root.openNextFile();
@@ -34,85 +34,86 @@ void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
 }
 
 void createDir(fs::FS &fs, const char * path){
-    Serial.printf("Creating Dir: %s\n", path);
+    Serial.printf("Criando diretorio: %s\n", path);
     if(fs.mkdir(path)){
-        Serial.println("Dir created");
+        Serial.println("Diretorio criado");
     } else {
-        Serial.println("mkdir failed");
+        Serial.println("mkdir falhou");
     }
 }
 
 void removeDir(fs::FS &fs, const char * path){
-    Serial.printf("Removing Dir: %s\n", path);
+    Serial.printf("Removendo diretorio: %s\n", path);
     if(fs.rmdir(path)){
-        Serial.println("Dir removed");
+        Serial.println("Diretorio removido");
     } else {
-        Serial.println("rmdir failed");
+        Serial.println("rmdir falhou");
     }
 }
 
-void readFile(fs::FS &fs, const char * path){
-    Serial.printf("Reading file: %s\r\n", path);
+void printFile(fs::FS &fs, const char * path){
+    Serial.printf("Lendo arquivo: %s\r\n", path);
 
     File file = fs.open(path);
     if(!file || file.isDirectory()){
-        Serial.println("- failed to open file for reading");
+        Serial.println("- falha ao abrir o arquivo para leitura");
         return;
     }
 
-    Serial.println("- read from file:");
+    Serial.println("- leitura do arquivo:");
     while(file.available()){
         Serial.write(file.read());
     }
+    Serial.print("\n");
     file.close();
 }
 
 void writeFile(fs::FS &fs, const char * path, const char * message){
-    Serial.printf("Writing file: %s\r\n", path);
+    Serial.printf("Escrevendo arquivo: %s\r\n", path);
 
     File file = fs.open(path, FILE_WRITE);
     if(!file){
-        Serial.println("- failed to open file for writing");
+        Serial.println("- falha ao abrir o arquivo para escrita");
         return;
     }
     if(file.print(message)){
-        Serial.println("- file written");
+        Serial.println("- arquivo escrito");
     } else {
-        Serial.println("- write failed");
+        Serial.println("- escrita falhou");
     }
     file.close();
 }
 
 void appendFile(fs::FS &fs, const char * path, const char * message){
-    Serial.printf("Appending to file: %s\r\n", path);
+    Serial.printf("Acrescentando ao arquivo %s\r\n", path);
 
     File file = fs.open(path, FILE_APPEND);
     if(!file){
-        Serial.println("- failed to open file for appending");
+        Serial.println("- falha ao abrir o arquivo para acrescentar");
         return;
     }
     if(file.print(message)){
-        Serial.println("- message appended");
+        Serial.println("- mensagem acrescentada");
     } else {
-        Serial.println("- append failed");
+        Serial.println("- acrescimo falhou");
     }
     file.close();
 }
 
 void renameFile(fs::FS &fs, const char * path1, const char * path2){
-    Serial.printf("Renaming file %s to %s\r\n", path1, path2);
+    Serial.printf("Renomeando o arquivo %s para %s\r\n", path1, path2);
     if (fs.rename(path1, path2)) {
-        Serial.println("- file renamed");
+        Serial.println("- arquivo renomeado");
     } else {
-        Serial.println("- rename failed");
+        Serial.println("- arquivo renomeado");
     }
 }
 
 void deleteFile(fs::FS &fs, const char * path){
-    Serial.printf("Deleting file: %s\r\n", path);
+    Serial.printf("Excluindo arquivo: %s\r\n", path);
     if(fs.remove(path)){
-        Serial.println("- file deleted");
+        Serial.println("- arquivo excluido");
     } else {
-        Serial.println("- delete failed");
+        Serial.println("- falha ao excluir");
     }
 }

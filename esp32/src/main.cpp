@@ -1,7 +1,7 @@
 #include "WiFi.h"
 #include "ESPAsyncWebServer.h"
 
-#include <func_lfs.h> 
+#include <func_littlefs.h> 
 
 #include <Arduino.h>
 #include <freertos/FreeRTOS.h>
@@ -26,6 +26,7 @@ int auth = 0;
 
 //outras partes do programa
 #include "tempo.h"
+#include "send.h"
  
 AsyncWebServer server(80);
 
@@ -154,7 +155,13 @@ void conecta_host(void * parameters){
   Serial.println(WiFi.localIP());
   Serial.println(" ");
 
-  sync_horario();
+  Serial.println("[LITTLEFS] Salvando SSID da rede em /syscfg/ssid_host.txt");
+  writeFile(LITTLEFS, "/syscfg/ssid_host.txt", ssid_host.c_str());
+  Serial.println("[LITTLEFS] Salvando PASSWORD da rede em /syscfg/pwd_host.txt");
+  writeFile(LITTLEFS, "/syscfg/pwd_host.txt", pwd_host.c_str());
+
+  start_timesync();
+  start_enviadados();
 
   vTaskDelete(NULL);
 }
@@ -172,6 +179,13 @@ void start_server(){
     if (auth == 1) request->send(LITTLEFS, "/ok_auth.html");
   });
   
+  server.on("/time", HTTP_GET, [](AsyncWebServerRequest *request){
+    time(&horario_epoch);
+    struct tm *info;
+    info = localtime(&horario_epoch);
+    request->send(200, "text/plain", asctime(info));
+  });
+
   //estilos
   server.on("/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LITTLEFS, "/favicon.ico");
@@ -250,7 +264,7 @@ void start_server(){
     for(int i=0;i<paramsNr;i++){
  
         AsyncWebParameter* p = request->getParam(i);
-        if (p->name() == "key" && auth == 0){
+        if (p->name() == "key" && !auth){
 
             if (p->value() == key){
 
@@ -270,7 +284,7 @@ void start_server(){
             }
         }
 
-        if (p->name() == "ssid_host" && auth == 1){
+        if (p->name() == "ssid_host" && auth){
 
             Serial.println("[QUERY RECEBIDA]");
             Serial.print("Parametro: ");
@@ -283,7 +297,7 @@ void start_server(){
             Serial.println(" ");
         }
 
-        if (p->name() == "pwd_host" && auth == 1){
+        if (p->name() == "pwd_host" && auth){
 
             Serial.println("[QUERY RECEBIDA]");
             Serial.print("Parametro: ");
@@ -297,7 +311,7 @@ void start_server(){
         }
     }
 
-    if(auth == 1 && ssid_host != "null" && pwd_host != "null" && connection_status!="ok"){
+    if(auth && ssid_host != "null" && pwd_host != "null" && connection_status!="ok"){
         connection_status="connecting";
         request->redirect("/connecting");
         delay(1000);
@@ -310,7 +324,7 @@ void start_server(){
           NULL,     //task handle
           0);               //cpu id
     }
-    if (auth == 0){
+    if (!auth){
       request->send(LITTLEFS, "/invalid_auth.html");
       }
 
@@ -328,10 +342,9 @@ void setup(){
   Serial.begin(115200);  
 
   // Inicializa LITTLEFS
-  
 
   if(!LITTLEFS.begin(true)){
-    Serial.println("[SISTEMA] An error has occurred while mounting LITTLEFS.");
+    Serial.println("[SISTEMA] ERRO. Nao foi possivel montar o LITTLEFS.");
     return;
   }
   else{
@@ -361,9 +374,54 @@ void setup(){
   Serial.println(WiFi.localIP());
   Serial.println(" ");
   
-  WiFi.onEvent(WiFiEvent);
+  if (LITTLEFS.exists("/syscfg")){
+
+    File syscfg_ssid = LITTLEFS.open("/syscfg/ssid_host.txt", "r");
+    if(syscfg_ssid && !syscfg_ssid.isDirectory()){
+      ssid_host = "";
+      while (syscfg_ssid.available()){
+        ssid_host += char(syscfg_ssid.read());
+      }
+      syscfg_ssid.close();
+
+      Serial.print("[LITTLEFS] SSID da rede encontrada em /syscfg/ssid_host.txt. SSID: ");
+      printFile(LITTLEFS, "/syscfg/ssid_host.txt");
+    }
+
+    File syscfg_pwd = LITTLEFS.open("/syscfg/pwd_host.txt", "r");
+    if(syscfg_pwd && !syscfg_pwd.isDirectory()){
+      pwd_host = "";
+      while (syscfg_pwd.available()){
+        pwd_host += char(syscfg_pwd.read());
+      }
+      syscfg_pwd.close();
+
+      Serial.print("[LITTLEFS] PASSWORD da rede encontrada em /syscfg/pwd_host.txt.");
+      printFile(LITTLEFS, "/syscfg/pwd_host.txt");
+    }
+
+    if (ssid_host != "null" && pwd_host != "null" && connection_status != "ok"){
+      Serial.println("[WIFI] Utilizando credenciais armazenadas no LITTLEFS.");
+      xTaskCreatePinnedToCore(
+          conecta_host,     //task function
+          "ConectaWifi",    //task name
+          8192,             //stack size
+          NULL,             //parameters to pass to the task
+          1,                //priority
+         NULL,     //task handle
+          0);               //cpu id
+    }
+  }
+  else {
+    Serial.println("[LITTLEFS] Criando diretorio /syscfg");
+    createDir(LITTLEFS, "/syscfg");
+  }
+
+  start_geradados();  //inicia a task de gerar dados aleatorios (asincrono)
+
+  WiFi.onEvent(WiFiEvent); //quando tiver um evento do wifi, printa (asincrono)
   
-  start_server();
+  start_server(); //inicia o servidor web (asincrono)
 
 }
  

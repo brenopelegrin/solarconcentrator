@@ -1,79 +1,110 @@
 #include <time.h>
-//#include <Arduino.h>
-//#include <freertos/FreeRTOS.h>
-//#include <freertos/task.h>
 //#include "RTClib.h"
 //#include <Wire.h>
 
 //RTC_DS3231 rtc_externo;
-char daysOfTheWeek[7][12] = {"Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"};
+//char daysOfTheWeek[7][12] = {"Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"};
 
-const char* ntpServer = "pool.ntp.br";
+time_t horario_epoch;
+struct tm horario_calendario;
+
+const PROGMEM char* ntpServer = "pool.ntp.br";  //pool ntp do brasil
 const long gmtOffset_sec =  -3 * 60 * 60;       //correcao para UTC-3
 const int daylightOffset_sec = 0;               //não há horário de verão no Brasil
 
-int sync_delay = 15*60*1000; //sincronizar a cada 15 minutos (em milisegundos)
+int sync_delay = 10*60*1000; //sincronizar a cada 10 minutos (em milisegundos)
+int ntp_running = 0;
+
+void atualizatempo(void * parameters){
+    while (1){
+        if (ntp_running) {
+            //armazena o tempo
+        }
+    }
+    vTaskDelete(NULL);
+}
+
+int pegatempo(int tipo){
+    //tipo 0 = epoch
+    //tipo 1 = hora
+    //tipo 2 = minuto
+    //tipo 3 = segundo
+    //tipo 4 = ano
+    //tipo 5 = mes
+    //tipo 6 = dia do mes
+    switch(tipo){
+        case 0: {
+            break;
+        }
+        case 1: {
+            break;
+        }
+        case 2: {
+            break;
+        }
+        case 3: {
+            break;
+        }
+        case 4: {
+            break;
+        }
+        case 5: {
+            break;
+        }
+        case 6: {
+            break;
+        }
+    }
+    return 0;
+}
 
 void ntpsync_timer(void * parameters){
     while(1){
+        getLocalTime(&horario_calendario);
+        time(&horario_epoch);
         while(sync_delay > 0){ //ta na hora? senao, continua o timer
             sync_delay-=500;
-            vTaskDelay(500);
+            vTaskDelay(500);    
         }
         if (sync_delay == 0 && connection_status == "ok"){ //ta na hora da brincadeira!
             Serial.print("[NTP] Obtendo tempo do servidor ");
             Serial.println(ntpServer);
-            configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
-            struct tm timeinfo;
-            if(!getLocalTime(&timeinfo)){
-                Serial.println("[NTP] Falha ao obter o tempo.");
+            configTime(gmtOffset_sec, daylightOffset_sec, ntpServer); //configura o tempo do esp
+            if(!getLocalTime(&horario_calendario)){
+                Serial.println("[NTP] Falha ao obter o tempo.");    //deu ruim
             }
-            else{
+            else{   //deu certo
+                time(&horario_epoch);
                 Serial.println("[NTP] Tempo sincronizado com sucesso!");
-                Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
-                Serial.print("Day of week: ");
-                Serial.println(&timeinfo, "%A");
-                Serial.print("Month: ");
-                Serial.println(&timeinfo, "%B");
-                Serial.print("Day of Month: ");
-                Serial.println(&timeinfo, "%d");
-                Serial.print("Year: ");
-                Serial.println(&timeinfo, "%Y");
-                Serial.print("Hour: ");
-                Serial.println(&timeinfo, "%H");
-                Serial.print("Hour (12 hour format): ");
-                Serial.println(&timeinfo, "%I");
-                Serial.print("Minute: ");
-                Serial.println(&timeinfo, "%M");
-                Serial.print("Second: ");
-                Serial.println(&timeinfo, "%S");
+                Serial.print("[NTP] Calendario gregoriano: ");
+                Serial.println(&horario_calendario, "%A, %d/%B/%Y %H:%M:%S");
+                Serial.print("[NTP] EPOCH time: ");
+                Serial.println(horario_epoch);
 
-                Serial.println("Time variables");
-                char timeHour[3];
-                strftime(timeHour,3, "%H", &timeinfo);
-                Serial.println(timeHour);
-                char timeWeekDay[10];
-                strftime(timeWeekDay,10, "%A", &timeinfo);
-                Serial.println(timeWeekDay);
-                Serial.println();
-
-                sync_delay = 15*60*1000;
+                sync_delay = 10*60*1000;
                 
             }
         }
     }
+    ntp_running = 0;
+    vTaskDelete(NULL);
 }
 
-void sync_horario(){
+void start_timesync(){
 
     sync_delay=0;
-
-    xTaskCreatePinnedToCore(
-        ntpsync_timer,       //task function
-        "NTPSyncTimer",   //task name
-        2048,             //stack size
-        NULL,             //parameters to pass to the task
-        1,                //priority
-        NULL,             //task handle
-        1);               //cpu id
+    Serial.println("[SISTEMA] Iniciando a tarefa NTPSyncTimer.");
+    if (!ntp_running){
+        ntp_running = 1;
+        xTaskCreatePinnedToCore(
+            ntpsync_timer,    //task function
+            "NTPSyncTimer",   //task name
+            2048,             //stack size
+            NULL,             //parameters to pass to the task
+            3,                //priority
+            NULL,             //task handle
+            1);               //cpu id
+        return;
+    }
+    else Serial.println("[SISTEMA] Houve uma tentativa de iniciar a tarefa NTPSyncTimer, mas ela ja esta rodando.");
 }
