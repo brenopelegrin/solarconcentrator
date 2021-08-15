@@ -7,6 +7,7 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <esp_ipc.h>
+#include <locale.h>
 
 //credenciais da rede AP
 const char* ssid_ap = "Concentrador Solar";
@@ -120,6 +121,7 @@ void auth_timer(void * parameters){
     vTaskDelay(500);
   }
   auth = 0;
+  logtempo();
   Serial.println("[WEB] Autenticacao expirada apos 1 minuto.");
   vTaskDelete(NULL);
 }
@@ -155,8 +157,10 @@ void conecta_host(void * parameters){
   Serial.println(WiFi.localIP());
   Serial.println(" ");
 
+  logtempo();
   Serial.println("[LITTLEFS] Salvando SSID da rede em /syscfg/ssid_host.txt");
   writeFile(LITTLEFS, "/syscfg/ssid_host.txt", ssid_host.c_str());
+  logtempo();
   Serial.println("[LITTLEFS] Salvando PASSWORD da rede em /syscfg/pwd_host.txt");
   writeFile(LITTLEFS, "/syscfg/pwd_host.txt", pwd_host.c_str());
 
@@ -258,6 +262,7 @@ void start_server(){
   server.on("/config", HTTP_GET, [](AsyncWebServerRequest *request){
 
     int paramsNr = request->params();
+    logtempo();
     Serial.print("\n[WEB] Numero de parametros recebidos: ");
     Serial.println(paramsNr);
  
@@ -273,13 +278,14 @@ void start_server(){
                 xTaskCreatePinnedToCore(
                   auth_timer,       //task function
                   "AuthTimer",      //task name
-                  2048,             //stack size
+                  1024,             //stack size
                   NULL,             //parameters to pass to the task
-                  1,                //priority
+                  4,                //priority
                   NULL,             //task handle
-                  0);               //cpu id
+                  PRO_CPU_NUM);               //cpu id
 
                 Serial.println("[QUERY RECEBIDA]");
+                logtempo();
                 Serial.println("[WEB] Autenticado. Iniciando timer de 1 minuto.\n");
             }
         }
@@ -320,16 +326,17 @@ void start_server(){
           "ConectaWifi",    //task name
           8192,             //stack size
           NULL,             //parameters to pass to the task
-          1,                //priority
+          4,                //priority
           NULL,     //task handle
-          0);               //cpu id
+          PRO_CPU_NUM);               //cpu id
     }
     if (!auth){
       request->send(LITTLEFS, "/invalid_auth.html");
       }
 
   });
-  
+
+  logtempo();
   Serial.println("[WEB] Ligando o ESPAsyncWebServer");
   server.begin();
 
@@ -338,17 +345,18 @@ void start_server(){
 
 void setup(){
 
+  setlocale (LC_ALL, "Portuguese");
   //inicia o Serial para debug
   Serial.begin(115200);  
 
   // Inicializa LITTLEFS
 
   if(!LITTLEFS.begin(true)){
-    Serial.println("[SISTEMA] ERRO. Nao foi possivel montar o LITTLEFS.");
+    Serial.println("[LITTLEFS] Erro: não foi possível montar o sistema de arquivos.");
     return;
   }
   else{
-    Serial.println("[SISTEMA] LITTLEFS montado. Lista de arquivos:");
+    Serial.println("[LITTLEFS] Sistema de arquivos montado. Lista de arquivos:");
   }
 
   listDir(LITTLEFS, "/", 3);
@@ -374,6 +382,11 @@ void setup(){
   Serial.println(WiFi.localIP());
   Serial.println(" ");
   
+  if (!LITTLEFS.exists("/tmp/stack")){
+    LITTLEFS.mkdir("/tmp/stack");
+    Serial.println("[LITTLEFS] Criando diretório /tmp/stack");
+  }
+
   if (LITTLEFS.exists("/syscfg")){
 
     File syscfg_ssid = LITTLEFS.open("/syscfg/ssid_host.txt", "r");
@@ -383,7 +396,6 @@ void setup(){
         ssid_host += char(syscfg_ssid.read());
       }
       syscfg_ssid.close();
-
       Serial.print("[LITTLEFS] SSID da rede encontrada em /syscfg/ssid_host.txt. SSID: ");
       printFile(LITTLEFS, "/syscfg/ssid_host.txt");
     }
@@ -395,12 +407,12 @@ void setup(){
         pwd_host += char(syscfg_pwd.read());
       }
       syscfg_pwd.close();
-
       Serial.print("[LITTLEFS] PASSWORD da rede encontrada em /syscfg/pwd_host.txt.");
       printFile(LITTLEFS, "/syscfg/pwd_host.txt");
     }
 
     if (ssid_host != "null" && pwd_host != "null" && connection_status != "ok"){
+      logtempo();
       Serial.println("[WIFI] Utilizando credenciais armazenadas no LITTLEFS.");
       xTaskCreatePinnedToCore(
           conecta_host,     //task function
@@ -408,8 +420,8 @@ void setup(){
           8192,             //stack size
           NULL,             //parameters to pass to the task
           1,                //priority
-         NULL,     //task handle
-          0);               //cpu id
+          NULL,     //task handle
+          PRO_CPU_NUM);               //cpu id
     }
   }
   else {

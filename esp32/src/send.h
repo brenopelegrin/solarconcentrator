@@ -20,8 +20,9 @@ float luminosidade = 1274.1142;
 float radiacao = 1123.2324;
 float vazao = 0.12345678;
 
-void geradados(void * parameters){
+int stack_count = 0;
 
+void geradados(void * parameters){
     while(1){
         srand(horario_epoch);
         t1 = (rand() % (55 - 10 + 1)) + 10;
@@ -62,14 +63,12 @@ void geradados(void * parameters){
 }
 
 void enviadados(void * parameters){
+    logtempo();
     Serial.printf("[esp2api] Tarefa iniciada no nucleo %i. \n", xPortGetCoreID());
     enviado=0;
     HTTPClient http;
     while(1){
         if(connection_status=="ok"){
-            time(&horario_epoch);
-            struct tm *info2;
-            info2 = localtime(&horario_epoch);
             if(horario_calendario.tm_sec == 0 && !enviado){
                 String path = apiServer;
                 path+=  "?key="+key;
@@ -89,34 +88,48 @@ void enviadados(void * parameters){
                 path+=  "&radiacao="+String(radiacao,4);
                 path+=  "&vazao="+String(vazao,4);
                 //manda
+                Serial.println(path);
                 http.begin(path.c_str());
 
-                Serial.printf("[esp2api] %s - Enviando dados para o servidor da API.\n", asctime(info2));
+                logtempo();
+                Serial.printf("[esp2api] Enviando dados para o servidor da API.\n");
 
                 // Send HTTP GET request
                 int httpResponseCode = http.GET();
                 
                 if (httpResponseCode==200) {
+                    logtempo();
                     Serial.print("[esp2api] OK. HTTP Response code: ");
                     Serial.println(httpResponseCode);
                     //String payload = http.getString();
                     //Serial.println(payload);
                 } 
                 else {
+                    logtempo();
                     Serial.print("[esp2api] ERRO. HTTP Response code: ");
                     Serial.println(httpResponseCode);
+                    logtempo();
+                    Serial.printf("[esp2api] Armazenando dados do timestamp %ld no stack.\n", horario_epoch);
+                    //armazena
+                    stack_count+=1;
+                    String path_stack = "/tmp/stack/";
+                    path_stack += String(horario_epoch);
+                    writeFile(LITTLEFS, path_stack.c_str(), path.c_str());
+                    path_stack="";
                 }
+
                 // Free resources
                 http.end();
                 path="";
-
                 vTaskDelay(100);
                 enviado=1;
             }
             else {
-                getLocalTime(&horario_calendario);
                 vTaskDelay(100);
                 enviado=0;
+            }
+            if(stack_count > 0){
+                //enviadados 
             }
         }
     }
@@ -124,7 +137,8 @@ void enviadados(void * parameters){
 }
 
 void start_enviadados(){
-    if (!enviadados_running){
+    if (!enviadados_running && geradados_running){
+        logtempo();
         Serial.println("[SISTEMA] Iniciando a tarefa esp2api.");
         enviadados_running=1;
         xTaskCreatePinnedToCore(
@@ -132,15 +146,16 @@ void start_enviadados(){
             "esp2api",      //task name
             8192,           //stack size
             NULL,           //parameters to pass to the task
-            2,              //priority
+            3,              //priority
             NULL,           //task handle
-            1);             //cpu id
+            APP_CPU_NUM);             //cpu id
         return;
     }
 }
 
 void start_geradados(){
     if (!geradados_running){
+        logtempo();
         Serial.println("[SENSORES] Iniciando a tarefa geraDados.");
         geradados_running=1;
         xTaskCreatePinnedToCore(
@@ -148,9 +163,9 @@ void start_geradados(){
             "geraDados",    //task name
             8192,           //stack size
             NULL,           //parameters to pass to the task
-            1,              //priority
+            2,              //priority
             NULL,           //task handle
-            1);             //cpu id
+            APP_CPU_NUM);             //cpu id
         return;
     }
 }

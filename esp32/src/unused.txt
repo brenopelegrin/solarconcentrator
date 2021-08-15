@@ -1,0 +1,32 @@
+void logtempo(){
+
+    int hora = pegatempo(1);
+    int minuto = pegatempo(2);
+    int segundo = pegatempo(3);
+    int dia = pegatempo(6);
+    int mes = pegatempo(5);
+
+    Serial.printf("[%s, ", convertetempo(7, pegatempo(7));
+
+    if (pegatempo(1) < 10) Serial.printf("0%d:", pegatempo(1));
+    else Serial.printf("%d:", pegatempo(1));
+
+    if (pegatempo(2) < 10) Serial.printf("0%d:", pegatempo(2));
+    else Serial.printf("%d:", pegatempo(2));
+
+    if (pegatempo(3) < 10) Serial.printf("0%d de", pegatempo(3));
+    else Serial.printf("%d:", pegatempo(3));
+
+    if (pegatempo(6) < 10) Serial.printf("0%d/", pegatempo(6));
+    else Serial.printf("%d/", pegatempo(6));
+
+    if (pegatempo(5) < 10) Serial.printf("0%d/", pegatempo(5));
+    else Serial.printf("%d/", pegatempo(5));
+
+    Serial.printf("%d] ", pegatempo(4));
+    return 0;
+}
+
+Serial.printf("[%s] ", asctime(&horario_calendario));
+                Serial.println("[Teste de data]");
+                Serial.printf("[%s, %d:%d:%d %d/%d/%d]", convertetempo(7, pegatempo(7)), pegatempo(1), pegatempo(2), pegatempo(3), pegatempo(6), pegatempo(5), pegatempo(4));

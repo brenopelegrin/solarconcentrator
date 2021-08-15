@@ -3,7 +3,7 @@
 #include <LITTLEFS.h>
 
 void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
-    Serial.printf("Listando diretorio: %s\r\n", dirname);
+    Serial.printf("\nListando diretorio: %s\r\n", dirname);
 
     File root = fs.open(dirname);
     if(!root){
@@ -34,7 +34,7 @@ void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
 }
 
 void createDir(fs::FS &fs, const char * path){
-    Serial.printf("Criando diretorio: %s\n", path);
+    Serial.printf("\nCriando diretorio: %s\n", path);
     if(fs.mkdir(path)){
         Serial.println("Diretorio criado");
     } else {
@@ -43,7 +43,7 @@ void createDir(fs::FS &fs, const char * path){
 }
 
 void removeDir(fs::FS &fs, const char * path){
-    Serial.printf("Removendo diretorio: %s\n", path);
+    Serial.printf("\nRemovendo diretorio: %s\n", path);
     if(fs.rmdir(path)){
         Serial.println("Diretorio removido");
     } else {
@@ -52,7 +52,7 @@ void removeDir(fs::FS &fs, const char * path){
 }
 
 void printFile(fs::FS &fs, const char * path){
-    Serial.printf("Lendo arquivo: %s\r\n", path);
+    Serial.printf("\nLendo arquivo: %s\r\n", path);
 
     File file = fs.open(path);
     if(!file || file.isDirectory()){
@@ -69,7 +69,7 @@ void printFile(fs::FS &fs, const char * path){
 }
 
 void writeFile(fs::FS &fs, const char * path, const char * message){
-    Serial.printf("Escrevendo arquivo: %s\r\n", path);
+    Serial.printf("\nEscrevendo arquivo: %s\r\n", path);
 
     File file = fs.open(path, FILE_WRITE);
     if(!file){
@@ -85,7 +85,7 @@ void writeFile(fs::FS &fs, const char * path, const char * message){
 }
 
 void appendFile(fs::FS &fs, const char * path, const char * message){
-    Serial.printf("Acrescentando ao arquivo %s\r\n", path);
+    Serial.printf("\nAcrescentando ao arquivo %s\r\n", path);
 
     File file = fs.open(path, FILE_APPEND);
     if(!file){
@@ -101,7 +101,7 @@ void appendFile(fs::FS &fs, const char * path, const char * message){
 }
 
 void renameFile(fs::FS &fs, const char * path1, const char * path2){
-    Serial.printf("Renomeando o arquivo %s para %s\r\n", path1, path2);
+    Serial.printf("\nRenomeando o arquivo %s para %s\r\n", path1, path2);
     if (fs.rename(path1, path2)) {
         Serial.println("- arquivo renomeado");
     } else {
@@ -110,7 +110,7 @@ void renameFile(fs::FS &fs, const char * path1, const char * path2){
 }
 
 void deleteFile(fs::FS &fs, const char * path){
-    Serial.printf("Excluindo arquivo: %s\r\n", path);
+    Serial.printf("\nExcluindo arquivo: %s\r\n", path);
     if(fs.remove(path)){
         Serial.println("- arquivo excluido");
     } else {
