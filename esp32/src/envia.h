@@ -1,5 +1,6 @@
 #include <HTTPClient.h>
 int enviado=0;
+int enviado_stack=0;
 int enviadados_running=0;
 int geradados_running=0;
 String apiServer = "https://concentradorsolar.000webhostapp.com/send";
@@ -20,7 +21,7 @@ float luminosidade = 1274.1142;
 float radiacao = 1123.2324;
 float vazao = 0.12345678;
 
-int stack_count = 0;
+int stack_count = 1;
 
 void geradados(void * parameters){
     while(1){
@@ -62,13 +63,54 @@ void geradados(void * parameters){
     vTaskDelete(NULL);
 }
 
+void enviadados_stack(void * parameters){
+    //IMPLEMENTAR:
+    //funcao que verifica se há conexão com a net usando método GET
+    //quando reconecta, o ESP pausa a tarefa esp2api
+    //e manda os dados do stack
+    //depois retoma a tarefa esp2api
+
+    logtempo();
+    Serial.printf("[esp2api-stack] Tarefa iniciada no nucleo %i. \n", xPortGetCoreID());
+    enviado_stack=0;
+    while(1){
+        vTaskDelay(500);
+        //HTTPClient http;
+        File root = LITTLEFS.open("/tmp/stack");
+        File i = root.openNextFile();
+        String i_name = String("");
+        String i_content = String("");
+        String i_path = String("");
+        if(stack_count > 0){
+            while(i){
+                logtempo();
+                i_name = i.name();
+                i_path = String(i_name);
+                //File i_file = LITTLEFS.open(i_path.c_str());
+                while (i.available()){
+                    i_content=i.readString();
+                }
+                Serial.printf("[esp2api-stack] Enviando stack ts=%s\n", i.name());
+                Serial.printf("[DEBUG] Conteudo: %s", i_content.c_str());
+                vTaskDelay(100);
+                //i_file.close();
+                i = root.openNextFile();
+                deleteFile(LITTLEFS, i_path.c_str());
+            }
+            i.close();
+            root.close();
+        }
+    }
+    vTaskDelete(NULL);
+}
+
 void enviadados(void * parameters){
     logtempo();
     Serial.printf("[esp2api] Tarefa iniciada no nucleo %i. \n", xPortGetCoreID());
     enviado=0;
     HTTPClient http;
     while(1){
-        if(connection_status=="ok"){
+        if(connection_status=="ok" && ntp_status){
             if(horario_calendario.tm_sec == 0 && !enviado){
                 String path = apiServer;
                 path+=  "?key="+key;
@@ -114,6 +156,7 @@ void enviadados(void * parameters){
                     stack_count+=1;
                     String path_stack = "/tmp/stack/";
                     path_stack += String(horario_epoch);
+                    //path_stack += String(".txt");
                     writeFile(LITTLEFS, path_stack.c_str(), path.c_str());
                     path_stack="";
                 }
@@ -127,9 +170,6 @@ void enviadados(void * parameters){
             else {
                 vTaskDelay(100);
                 enviado=0;
-            }
-            if(stack_count > 0){
-                //enviadados 
             }
         }
     }
@@ -148,7 +188,15 @@ void start_enviadados(){
             NULL,           //parameters to pass to the task
             3,              //priority
             NULL,           //task handle
-            APP_CPU_NUM);             //cpu id
+            APP_CPU_NUM);   //cpu id
+        xTaskCreatePinnedToCore(
+            enviadados_stack,     //task function
+            "esp2api-stack",      //task name
+            8192,           //stack size
+            NULL,           //parameters to pass to the task
+            3,              //priority
+            NULL,           //task handle
+            APP_CPU_NUM);   //cpu id
         return;
     }
 }

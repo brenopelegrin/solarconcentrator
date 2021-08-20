@@ -13,6 +13,7 @@
 const char* ssid_ap = "Concentrador Solar";
 const char* pwd_ap =  "";
 
+//masterkey hardcoded
 const String key = "ALDEIDO";
 
 String ssid_host = "null";
@@ -27,7 +28,9 @@ int auth = 0;
 
 //outras partes do programa
 #include "tempo.h"
-#include "send.h"
+#include "envia.h"
+#include "solar_track.h"
+#include "sensores.h"
  
 AsyncWebServer server(80);
 
@@ -359,6 +362,12 @@ void setup(){
     Serial.println("[LITTLEFS] Sistema de arquivos montado. Lista de arquivos:");
   }
 
+  if (!LITTLEFS.exists("/tmp")){
+    createDir(LITTLEFS, "/tmp");
+    createDir(LITTLEFS, "/tmp/stack");
+    Serial.println("[LITTLEFS] Criando diretório /tmp/stack");
+  }
+
   listDir(LITTLEFS, "/", 3);
   
   WiFi.mode(WIFI_MODE_APSTA);
@@ -381,11 +390,6 @@ void setup(){
   Serial.print("IP: ");
   Serial.println(WiFi.localIP());
   Serial.println(" ");
-  
-  if (!LITTLEFS.exists("/tmp/stack")){
-    LITTLEFS.mkdir("/tmp/stack");
-    Serial.println("[LITTLEFS] Criando diretório /tmp/stack");
-  }
 
   if (LITTLEFS.exists("/syscfg")){
 

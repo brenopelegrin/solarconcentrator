@@ -34,6 +34,7 @@ const char *semana[7] = {"Domingo",
 
 int sync_delay = 10*60*1000; //sincronizar a cada 10 minutos (em milisegundos)
 int ntp_running = 0;
+int ntp_status = 0;
 
 void atualizatempo(void * parameters){
     while (1){
@@ -163,6 +164,7 @@ void ntpsync_timer(void * parameters){
             Serial.println(ntpServer);
             configTime(gmtOffset_sec, daylightOffset_sec, ntpServer); //configura o tempo do esp
             if(!getLocalTime(&horario_calendario)){
+                ntp_status = 0;
                 Serial.println("[NTP] Falha ao obter o tempo.");    //deu ruim
             }
             else{   //deu certo
@@ -172,7 +174,7 @@ void ntpsync_timer(void * parameters){
                 Serial.println(&horario_calendario, "%A, %d/%B/%Y %H:%M:%S");
                 Serial.print("[NTP] EPOCH time: ");
                 Serial.println(horario_epoch);
-
+                ntp_status = 1;
                 sync_delay = 10*60*1000;
                 
             }
