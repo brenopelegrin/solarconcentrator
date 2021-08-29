@@ -3,7 +3,9 @@ int enviado=0;
 int enviado_stack=0;
 int enviadados_running=0;
 int geradados_running=0;
+int server_status=0;
 String apiServer = "https://concentradorsolar.000webhostapp.com/send";
+String serverStatus = "https://concentradorsolar.000webhostapp.com/status";
 
 //dados teste
 float t1 = 33.2234;
@@ -73,15 +75,20 @@ void enviadados_stack(void * parameters){
     logtempo();
     Serial.printf("[esp2api-stack] Tarefa iniciada no nucleo %i. \n", xPortGetCoreID());
     enviado_stack=0;
+    HTTPClient http_stack;
     while(1){
         vTaskDelay(500);
         //HTTPClient http;
-        File root = LITTLEFS.open("/tmp/stack");
+        File root = LITTLEFS.open("/tmp/stack"); //local onde serao armazenados os dados
         File i = root.openNextFile();
         String i_name = String("");
         String i_content = String("");
         String i_path = String("");
-        if(stack_count > 0){
+        http_stack.begin(serverStatus.c_str());
+        int httpResponseCode_status = http_stack.GET();
+        if (httpResponseCode_status == 200) server_status = 1;
+        http_stack.end();
+        if(stack_count > 0 && connection_status == "ok" && server_status){ //se nao tiver erro na conexao, executa
             while(i){
                 logtempo();
                 i_name = i.name();
@@ -90,15 +97,35 @@ void enviadados_stack(void * parameters){
                 while (i.available()){
                     i_content=i.readString();
                 }
+                http_stack.begin(i_content.c_str());
                 Serial.printf("[esp2api-stack] Enviando stack ts=%s\n", i.name());
                 Serial.printf("[DEBUG] Conteudo: %s", i_content.c_str());
                 vTaskDelay(100);
+
+                // Send HTTP GET request
+                int httpResponseCode_stack = http_stack.GET();
+                
+                if (httpResponseCode_stack==200) {
+                    logtempo();
+                    Serial.printf("[esp2api-stack] OK. HTTP Response code: %d. Stack ts=%s enviado.\n", httpResponseCode_stack, i.name());
+                    i = root.openNextFile();
+                    deleteFile(LITTLEFS, i_path.c_str());
+                } 
+                else {
+                    logtempo();
+                    Serial.printf("[esp2api-stack] ERRO ao enviar ts=%s. HTTP Response code: %d.\n", i.name(), httpResponseCode_stack);
+                }
                 //i_file.close();
-                i = root.openNextFile();
-                deleteFile(LITTLEFS, i_path.c_str());
             }
             i.close();
             root.close();
+        }
+        else{ //se houver problema na conexao, executa
+            int delay_stack = 60*1000*3;
+            while(delay_stack > 0){ //delay de 3 minutos para esperar o servidor
+                delay_stack-=500;
+                vTaskDelay(500);    
+            }
         }
     }
     vTaskDelete(NULL);
@@ -110,7 +137,7 @@ void enviadados(void * parameters){
     enviado=0;
     HTTPClient http;
     while(1){
-        if(connection_status=="ok" && ntp_status){
+        if(connection_status=="ok" && ntp_status && server_status){
             if(horario_calendario.tm_sec == 0 && !enviado){
                 String path = apiServer;
                 path+=  "?key="+key;
@@ -147,6 +174,10 @@ void enviadados(void * parameters){
                     //Serial.println(payload);
                 } 
                 else {
+                    // adicionar algoritmo para verificar o espaço disponivel no sistema
+                    // se nao houver espaço necessario, verifica se o SD está montado
+                    // se o SD estiver montado, armazena no SD
+
                     logtempo();
                     Serial.print("[esp2api] ERRO. HTTP Response code: ");
                     Serial.println(httpResponseCode);
