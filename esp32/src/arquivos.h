@@ -1,6 +1,10 @@
-#include <Arduino.h>
 #include "FS.h"
+#include "SD.h"
+#include <SPI.h>
 #include <LITTLEFS.h>
+#define SD_CS 5
+
+//adicionar aqui a implementação de um df para estimar o espaço disponivel na flash interna
 
 void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
     Serial.printf("\nListando diretorio: %s\r\n", dirname);

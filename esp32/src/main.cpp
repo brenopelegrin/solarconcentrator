@@ -1,13 +1,14 @@
-#include "WiFi.h"
-#include "ESPAsyncWebServer.h"
-
-#include <func_littlefs.h> 
 
 #include <Arduino.h>
+#include <Wire.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <esp_ipc.h>
 #include <locale.h>
+
+#include "arquivos.h"
+#include "WiFi.h"
+#include "ESPAsyncWebServer.h"
 
 //credenciais da rede AP
 const char* ssid_ap = "Concentrador Solar";
@@ -22,6 +23,7 @@ String pwd_host =  "null";
 //variaveis de controle
 String connection_status = "null";
 int auth = 0;
+int extSD_status = 0;
 
 //task handlers
 //TaskHandle_t conectaWifi_h = NULL;
@@ -29,7 +31,7 @@ int auth = 0;
 //outras partes do programa
 #include "tempo.h"
 #include "envia.h"
-#include "solar_track.h"
+#include "rastreamento.h"
 #include "sensores.h"
  
 AsyncWebServer server(80);
@@ -335,7 +337,7 @@ void start_server(){
     }
     if (!auth){
       request->send(LITTLEFS, "/invalid_auth.html");
-      }
+    }
 
   });
 
@@ -353,23 +355,33 @@ void setup(){
   Serial.begin(115200);  
 
   // Inicializa LITTLEFS
-
+  // adicionar algoritmo para detectar se o SDcard está conectado
+  // se estiver conectado, verifica se há um fs FAT32. Se nao tiver, formata
+  // e aí cria a estrutura de diretorios no SD (/tmp, etc)
   if(!LITTLEFS.begin(true)){
-    Serial.println("[LITTLEFS] Erro: não foi possível montar o sistema de arquivos.");
-    return;
+    Serial.println("[LITTLEFS] Erro: não foi possível montar o sistema de arquivos. Reiniciando o sistema.");
+    ESP.restart();
   }
   else{
     Serial.println("[LITTLEFS] Sistema de arquivos montado. Lista de arquivos:");
+    listDir(LITTLEFS, "/", 3);
+    if (!LITTLEFS.exists("/tmp")){
+      createDir(LITTLEFS, "/tmp");
+      createDir(LITTLEFS, "/tmp/stack");
+      Serial.println("[LITTLEFS] Criando diretório /tmp/stack");
+    }
   }
 
-  if (!LITTLEFS.exists("/tmp")){
-    createDir(LITTLEFS, "/tmp");
-    createDir(LITTLEFS, "/tmp/stack");
-    Serial.println("[LITTLEFS] Criando diretório /tmp/stack");
+  if(!SD.begin(SD_CS)) {
+    Serial.println("[extSD] Erro: não foi possível montar o sistema de arquivos.");
+    extSD_status=0;
+  }
+  else{
+    Serial.println("[extSD] Sistema de arquivos montado. Lista de arquivos:");
+    extSD_status=1;
+    listDir(SD, "/", 3);
   }
 
-  listDir(LITTLEFS, "/", 3);
-  
   WiFi.mode(WIFI_MODE_APSTA);
   WiFi.softAP(ssid_ap);
  
@@ -424,8 +436,8 @@ void setup(){
           8192,             //stack size
           NULL,             //parameters to pass to the task
           1,                //priority
-          NULL,     //task handle
-          PRO_CPU_NUM);               //cpu id
+          NULL,             //task handle
+          PRO_CPU_NUM);     //cpu id
     }
   }
   else {
@@ -433,6 +445,7 @@ void setup(){
     createDir(LITTLEFS, "/syscfg");
   }
 
+  configSensores();
   start_geradados();  //inicia a task de gerar dados aleatorios (asincrono)
 
   WiFi.onEvent(WiFiEvent); //quando tiver um evento do wifi, printa (asincrono)

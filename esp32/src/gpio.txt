@@ -1,0 +1,21 @@
+---------------------------------
+MicroSD card module
+
+3V3	            3.3V
+CS	            GPIO 5
+MOSI	        GPIO 23
+CLK	            PIO 18
+MISO	        GPIO 19
+GND	            GND
+---------------------------------
+
+1-Wire Bus: GPIO 21
+
+---------------------------------
+RTC DS3231 module
+
+3V3             3.3V
+SDA             GPIO 21
+SCL             GPIO 22
+GND             GND
+---------------------------------
