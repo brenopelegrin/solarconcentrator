@@ -1,0 +1,215 @@
+div.englobaMain {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: baseline;
+}
+
+div.engloba-status-sistemas-concentrador {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+}
+
+div.engloba-status-sistemas-concentrador > h3, .engloba-configuracoes-concentrador > h3 {
+    align-self: center;
+    font-family: 'Metropolis-Light', sans-serif !important;
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+div.engloba-super-widget{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 28rem;
+    margin-top: 0.9rem;
+}
+
+div.super-widget-body {
+    margin-top: 0.2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr 2fr;
+    align-content: center;
+    justify-items: center;
+    width: 100%;
+}
+
+div.engloba-img-widget-data {
+    width: 13rem;
+    margin-bottom: 0.6rem;
+}
+
+div.super-widget-header {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #FAFAFA;
+    width: 100%;
+    
+    -webkit-box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+    box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+    z-index: 2;
+}
+
+div.super-widget-header > h4 {
+    margin: 0;
+    padding: .5rem 1rem;
+    font-weight: normal;
+}
+
+.marginRight {
+    margin-right: 1rem;
+}
+
+.marginLeft {
+    margin-left: 1rem;
+}
+
+div.engloba-status-sistemas-concentrador > div:nth-child(1) {
+    margin: 0 !important;
+}
+
+
+/************ LADO DIREITO *******************/
+
+.engloba-configuracoes-concentrador {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+}
+
+.engloba-configuracoes-direita {
+    margin-top: 1.2rem;
+    width: 32rem;
+    display: flex;
+    flex-direction: column;
+}
+
+div.engloba-configuracoes-concentrador > div.engloba-configuracoes-direita {
+    margin: 0;
+}
+
+div.header-consulta {
+    padding: .2rem 1rem;
+    background-color: #263238;
+}
+
+div.header-consulta > h3 {
+    color: white;
+    font-weight: 100;
+    font-size: 1.2rem;
+}
+
+div.engloba-widgets-config {
+    display: flex;
+    flex-direction: column;
+}
+
+div.widget-config {
+    width: 100%;
+}
+
+h4.title-widget {
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+}
+
+h2.desc-widget {
+    font-size: 0.8rem !important;
+}
+
+div.engloba-microcontroller {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    align-self: flex-end;
+    justify-items: center;
+    width: max-content;
+    background-color: #263238;
+    -webkit-box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+    box-shadow: 3px 3px 7px 0px rgba(50, 50, 50, 0.5);
+}
+
+div.engloba-microcontroller > div.engloba-img-widget-data {
+    margin: 0;
+    padding: 0.6rem;
+    box-shadow: none;
+}
+
+div.engloba-microcontroller > div.engloba-img-widget-data > div.engloba-imgdata {
+    background-color: #9EA8DB;
+}
+
+div.widget-config > div.engloba-imgdata > a:hover {
+    background-color: #999;
+}
+
+div.widget-config > div.engloba-imgdata > a > img {
+    max-width: 2rem;
+    max-height: 2rem;
+    width: auto;
+    height: auto;
+    align-self: center;
+}
+
+@media(max-width:1010px) {
+    div.englobaMain {
+        flex-direction: column;
+    }
+
+    div.engloba-status-sistemas-concentrador, .engloba-configuracoes-concentrador {
+        align-self: center;
+    }
+
+    .engloba-configuracoes-concentrador {
+        padding-top: 2rem;
+    }
+
+    div.engloba-microcontroller {
+        align-self: center;
+    }
+}
+
+@media(max-width: 540px) {
+    div.engloba-status-sistemas-concentrador, .engloba-configuracoes-concentrador {
+        width: 100%;
+    }
+    .engloba-configuracoes-direita {
+        align-self: center;
+        width: 95%;
+    }
+    .engloba-super-widget {
+        align-self: center;
+        width: 95% !important;
+    }
+    div.super-widget-body {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+    }
+    .marginRight {
+        margin-right: 0rem;
+    }
+
+    .marginLeft {
+        margin-left: 0rem;
+    }
+    div.super-widget-body > div.engloba-img-widget-data {
+        width: 100%;
+    }
+    div.engloba-microcontroller {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1r;
+        align-self: center;
+        margin-bottom: 2rem;
+    }
+}

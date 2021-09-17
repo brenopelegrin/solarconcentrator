@@ -10,6 +10,9 @@
 #include "WiFi.h"
 #include "ESPAsyncWebServer.h"
 
+#define BUZZER_PIN 18
+#define BUZZER_CHANNEL 0
+
 //credenciais da rede AP
 const char* ssid_ap = "Concentrador Solar";
 const char* pwd_ap =  "";
@@ -451,6 +454,10 @@ void setup(){
   WiFi.onEvent(WiFiEvent); //quando tiver um evento do wifi, printa (asincrono)
   
   start_server(); //inicia o servidor web (asincrono)
+
+  digitalWrite(18, HIGH);
+  delay(1000);
+  digitalWrite(18, LOW);
 
 }
  

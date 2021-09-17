@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--Fonte-->
+        <link rel="stylesheet" href="/files/font-awesome.min.css">
+        <link rel="stylesheet" href="/files/roboto.css">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="./dashboard.css">
+        <title>Dashboard ESP32</title>
+    </head>
+
+    <body>
+        <header class="cabeca">
+            <div class="bonito">
+                <img src="/files/gota.png" alt="Natura" id="logo">
+                <img src="/files/header_linhas.png" alt="Natura" id="flecha-separa">
+                <div class="mesma-linha">
+                    <div class="titulo-header">
+                        <a id="titulo-tag-a">
+                            <h1 class="titulo especial">Concentrador</h1>
+                            <h1 class="titulo especial" id="solarTitle">Solar</h1>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="englobaMain">
+            <div class="engloba-status-sistemas-concentrador">
+                <div class="engloba-super-widget" style="margin-top: 1.2rem;">
+                    <div class="super-widget-header">
+                        <h4>Rede Local e Sistemas Remotos</h4>
+                    </div>
+                    <div class="super-widget-body">
+                        <div class="engloba-img-widget-data marginRight">
+                            <div class="engloba-imgdata">
+                                <img src="./public/sinal-wifi.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">Rede Wireless</h4>
+                                <h2 class="data-widget">Desconectado</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-img-widget-data marginLeft">
+                            <div class="engloba-imgdata">
+                                <img src="./public/local-network.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">IPV4 da Rede Local</h4>
+                                <h2 class="data-widget">192.168.1.114</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-img-widget-data marginRight">
+                            <div class="engloba-imgdata">
+                                <img src="./public/ntp.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">Servidor NTP</h4>
+                                <h2 class="data-widget">Online</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-img-widget-data marginLeft">
+                            <div class="engloba-imgdata">
+                                <img src="./public/database.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">Database Remoto</h4>
+                                <h2 class="data-widget">Online</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="engloba-super-widget">
+                    <div class="super-widget-header">
+                        <h4>Sensores Acoplados</h4>
+                    </div>
+                    <div class="super-widget-body">
+                        <div class="engloba-img-widget-data marginRight">
+                            <div class="engloba-imgdata">
+                                <img src="./public/therrmometer.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">Temperatura</h4>
+                                <h2 class="data-widget">10 Operantes</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-img-widget-data marginLeft">
+                            <div class="engloba-imgdata">
+                                <img src="./public/therrmometer.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">Piranômetro</h4>
+                                <h2 class="data-widget">Operante</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-img-widget-data marginRight">
+                            <div class="engloba-imgdata">
+                                <img src="./public/therrmometer.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">Vazão</h4>
+                                <h2 class="data-widget">Operante</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-img-widget-data marginLeft">
+                            <div class="engloba-imgdata">
+                                <img src="./public/therrmometer.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">Anenômetro</h4>
+                                <h2 class="data-widget">Inoperante</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="engloba-super-widget">
+                    <div class="super-widget-header">
+                        <h4>Dispositivos Externos</h4>
+                    </div>
+                    <div class="super-widget-body">
+                        <div class="engloba-img-widget-data marginRight">
+                            <div class="engloba-imgdata">
+                                <img src="./public/therrmometer.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">Cartão SD Externo</h4>
+                                <h2 class="data-widget">Conectado</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-img-widget-data marginLeft">
+                            <div class="engloba-imgdata">
+                                <img src="./public/therrmometer.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">Buzzer</h4>
+                                <h2 class="data-widget">Conectado</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-img-widget-data marginRight">
+                            <div class="engloba-imgdata">
+                                <img src="./public/therrmometer.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">Motor da Parábola</h4>
+                                <h2 class="data-widget">Operante</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-img-widget-data marginLeft">
+                            <div class="engloba-imgdata">
+                                <img src="./public/therrmometer.png" alt="sinal wifi">
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget">Alimentação externa</h4>
+                                <h2 class="data-widget">Conectada</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="engloba-configuracoes-concentrador">
+                <div class="engloba-configuracoes-direita">
+                    <div class="header-consulta">
+                        <img src="/public/system.png" alt="Config">
+                        <h3>Configurações</h3>
+                    </div>
+                    <div class="engloba-widgets-config">
+                        <div class="engloba-img-widget-data widget-config">
+                            <div class="engloba-imgdata">
+                                <a href="./main_rede.html"><img src="./public/sinal-wifi.png" alt="sinal wifi"></a>
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget title-widget">Configurações de Rede</h4>
+                                <h2 class="data-widget desc-widget">Escolher a rede Wireless e o Servidor NTP</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-img-widget-data widget-config">
+                            <div class="engloba-imgdata">
+                                <a href="./main_geo.html"><img src="./public/mundo.png" alt="sinal wifi"></a>
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget title-widget">Configurações Geográficas</h4>
+                                <h2 class="data-widget desc-widget">Latitude, longitude e fuso horário do concentrador</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-img-widget-data widget-config">
+                            <div class="engloba-imgdata">
+                                <a href="./main_internal.html"><img src="./public/wrench.png" alt="sinal wifi"></a>
+                            </div>
+                            <div class="engloba-data-and-type">
+                                <h4 class="type-widget title-widget">Configurações do Sistema</h4>
+                                <h2 class="data-widget desc-widget">Tempo de atualização do NTP, variáveis internas</h2>
+                            </div>
+                        </div>
+                        <div class="engloba-microcontroller">
+                            <div class="engloba-img-widget-data">
+                                <div class="engloba-imgdata">
+                                    <img src="./public/ram.png" alt="sinal wifi">
+                                </div>
+                                <div class="engloba-data-and-type">
+                                    <h4 class="type-widget">Uso da RAM</h4>
+                                    <h2 class="data-widget">45%</h2>
+                                </div>
+                            </div>
+                            <div class="engloba-img-widget-data">
+                                <div class="engloba-imgdata">
+                                    <img src="./public/sdcard.png" alt="sinal wifi">
+                                </div>
+                                <div class="engloba-data-and-type">
+                                    <h4 class="type-widget">Uso do SD</h4>
+                                    <h2 class="data-widget">45%</h2>
+                                </div>
+                            </div>
+                            <div class="engloba-img-widget-data">
+                                <div class="engloba-imgdata">
+                                    <img src="./public/cpu.png" alt="sinal wifi">
+                                </div>
+                                <div class="engloba-data-and-type">
+                                    <h4 class="type-widget">Uso da CPU</h4>
+                                    <h2 class="data-widget">45%</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
