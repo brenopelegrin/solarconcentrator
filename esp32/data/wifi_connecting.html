@@ -13,13 +13,18 @@
 </head>
 
 <body>
+    <script>
+        setTimeout(function(){
+            window.location.href = '/wifi/connecting';
+        }, 5000);
+    </script>
     <header class="cabeca">
         <div class="bonito">
             <img src="/files/gota.png" alt="Natura" id="logo">
             <img src="/files/header_linhas.png" alt="Natura" id="flecha-separa">
             <div class="mesma-linha">
                 <div class="titulo-header">
-                    <a href="/home" id="titulo-tag-a">
+                    <a href="/dashboard" id="titulo-tag-a">
                         <h1 class="titulo especial">Concentrador</h1>
                         <h1 class="titulo especial" id="solarTitle">Solar</h1>
                     </a>
@@ -30,11 +35,11 @@
     <div class="englobaMain">
         <div class="engloba-img-widget-data">
             <div class="engloba-imgdata">
-                <img src="/files/error.png" alt="Cadeado">
+                <img src="/files/connecting.png" alt="Cadeado">
             </div>
             <div class="engloba-data-and-type">
-                <h4 class="type-widget">ERRO</h4>
-                <h2 class="data-widget">Falha na conexão. Rede ou credenciais inválidas.</h2>
+                <h4 class="type-widget">STATUS</h4>
+                <h2 class="data-widget">Tentando conectar-se à rede WiFi...</h2>
             </div>
         </div>
         <div class="engloba-chart-consulta">

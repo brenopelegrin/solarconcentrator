@@ -183,12 +183,26 @@ void handler_webconfigwifi(){
   return;
 }
 
+String dashboard_processor(const String& var)
+{
+  if(var == "PLACEHOLDER_TEMPERATURA")
+    return F("Hello world!");
+  return String();
+}
+
 void start_server(){
   
   //paginas
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    if (auth == 0) request->send(LITTLEFS, "/no_auth.html");
-    if (auth == 1) request->send(LITTLEFS, "/ok_auth.html");
+    request->redirect("/dashboard");
+  });
+  server.on("/dashboard", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/dashboard.html", String(), false, dashboard_processor);
+  });
+
+  server.on("/wifi", HTTP_GET, [](AsyncWebServerRequest *request){
+    if (auth == 0) request->send(LITTLEFS, "/wifi_no_auth.html");
+    if (auth == 1) request->send(LITTLEFS, "/wifi_ok_auth.html");
   });
   
   server.on("/time", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -199,11 +213,15 @@ void start_server(){
   });
 
   //estilos
+
   server.on("/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LITTLEFS, "/favicon.ico");
   });
   server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LITTLEFS, "/style.css");
+  });
+  server.on("/dashboard.css", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/dashboard.css");
   });
   server.on("/files/font-awesome.min.css", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LITTLEFS, "/files/font-awesome.min.css");
@@ -212,7 +230,7 @@ void start_server(){
     request->send(LITTLEFS, "/files/roboto.css");
   });
 
-  //imagens
+  //imagens parte wifi
   server.on("/files/gota.png", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LITTLEFS, "/files/gota.png");
   });
@@ -238,9 +256,50 @@ void start_server(){
     request->send(LITTLEFS, "/files/shield.png");
   });
 
+  //imagens dashboard
+  server.on("/files/sdcard.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/sdcard.png", "image/png");
+  });
+  server.on("/files/mundo.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/mundo.png", "image/png");
+  });
+  server.on("/files/ntp.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/ntp.png", "image/png");
+  });
+  server.on("/files/cpu.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/cpu.png", "image/png");
+  });
+  server.on("/files/sinal-wifi.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/sinal-wifi.png", "image/png");
+  });
+  server.on("/files/system.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/system.png","image/png");
+  });
+  server.on("/files/ram.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/ram.png","image/png");
+  });
+  server.on("/files/piranometro.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/piranometro.png", "image/png");
+  });
+  server.on("/files/local-network.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/local-network.png", "image/png");
+  });
+  server.on("/files/anenometro.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/anenometro.png", "image/png");
+  });
+  server.on("/files/database.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/database.png", "image/png");
+  });
+  server.on("/files/vazao.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/vazao.png", "image/png");
+  });
+  server.on("/files/termometro.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/termometro.png", "image/png");
+  });
+
   //fontes
   server.on("/files/Metropolis-Light.otf", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LITTLEFS, "/files/icon_consulta.png");
+    request->send(LITTLEFS, "/files/Metropolis-Light.otf");
   });
   server.on("/files/roboto-v27-latin-900.eot", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LITTLEFS, "/files/roboto-v27-latin-900.eot");
@@ -252,18 +311,18 @@ void start_server(){
     request->send(LITTLEFS, "/files/roboto-v27-latin-900.ttf");
   });
 
-  server.on("/connecting", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/wifi/connecting", HTTP_GET, [](AsyncWebServerRequest *request){
     if(connection_status == "ok"){
-      request->send(LITTLEFS, "/connected.html");
+      request->send(LITTLEFS, "/wifi_connected.html");
     }
     if(connection_status == "fail"){
-      request->send(LITTLEFS, "/invalid_network.html");
+      request->send(LITTLEFS, "/wifi_invalid_network.html");
     }
     if(connection_status == "connecting"){
-      request->send(LITTLEFS, "/connecting.html");
+      request->send(LITTLEFS, "/wifi_connecting.html");
     }
     if(connection_status == "null"){
-      request->redirect("/");
+      request->redirect("/wifi");
     }
   });
   
@@ -327,7 +386,7 @@ void start_server(){
 
     if(auth && ssid_host != "null" && pwd_host != "null" && connection_status!="ok"){
         connection_status="connecting";
-        request->redirect("/connecting");
+        request->redirect("/wifi/connecting");
         delay(1000);
         xTaskCreatePinnedToCore(
           conecta_host,     //task function
@@ -339,7 +398,7 @@ void start_server(){
           PRO_CPU_NUM);               //cpu id
     }
     if (!auth){
-      request->send(LITTLEFS, "/invalid_auth.html");
+      request->send(LITTLEFS, "/wifi_invalid_auth.html");
     }
 
   });
