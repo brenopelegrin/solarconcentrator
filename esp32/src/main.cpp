@@ -185,8 +185,55 @@ void handler_webconfigwifi(){
 
 String dashboard_processor(const String& var)
 {
-  if(var == "PLACEHOLDER_TEMPERATURA")
-    return F("Hello world!");
+  if(var == "PLACEHOLDER_SDSTATUS"){
+    String dado = "";
+    if (extSD_status){
+      dado+="Operante";
+    }
+    else{
+      dado += "Inoperante";
+    }
+    return dado;
+  }
+  if(var == "PLACEHOLDER_WIFISTATUS"){
+    String dado = "";
+    if (connection_status == "ok"){
+      dado+="Conectado";
+    }
+    else{
+      dado += "Desconectado";
+    }
+    return dado;
+  }
+  if(var == "PLACEHOLDER_IPLOCAL"){
+    return String(WiFi.localIP());
+  }
+  if(var == "PLACEHOLDER_NTPSTATUS"){
+    String dado = "";
+    if (ntp_status){
+      dado+="Online";
+    }
+    else{
+      dado += "Offline";
+    }
+    return dado;
+  }
+  if(var == "PLACEHOLDER_APISTATUS"){
+    String dado = "";
+    if (server_status){
+      dado+="Online";
+    }
+    else{
+      dado += "Offline";
+    }
+    return dado;
+  }
+  if(var == "PLACEHOLDER_TEMPERATURA"){
+    String dado = "";
+    dado += String(num_dallas, 2);
+    dado += " operantes";
+    return dado;
+  }
   return String();
 }
 
@@ -294,6 +341,15 @@ void start_server(){
     request->send(LITTLEFS, "/files/vazao.png", "image/png");
   });
   server.on("/files/termometro.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/termometro.png", "image/png");
+  });
+  server.on("/files/alimentacao.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/termometro.png", "image/png");
+  });
+  server.on("/files/motor.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/termometro.png", "image/png");
+  });
+  server.on("/files/buzzer.png", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LITTLEFS, "/files/termometro.png", "image/png");
   });
 

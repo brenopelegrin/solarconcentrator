@@ -21,7 +21,7 @@ DeviceAddress sens_t10 = { 0x28, 0x20, 0x64, 0x12, 0x3F, 0xFD, 0x70, 0xC6 };
 
 DeviceAddress tempDeviceAddress;
 
-int num_sensores = 0;
+int num_dallas = 0;
 
 void printAddress(DeviceAddress deviceAddress)
 {
@@ -36,7 +36,7 @@ void printAddress(DeviceAddress deviceAddress)
 void configSensores(){
     //inicia a interface 1-wire
     sensors.begin();
-    num_sensores = sensors.getDeviceCount();
+    num_dallas = sensors.getDeviceCount();
     Serial.print("[I/O] Definindo a resolução para ");
     Serial.print(TEMPERATURE_PRECISION, DEC);
     //configura a resolução dos sensores cadastrados
@@ -55,7 +55,7 @@ void configSensores(){
     Serial.printf("--- Iniciando listagem de sensores DS18B20 ---\n");
     int i = 0;
     // mostra informações sobre cada sensor conectado
-    for(i=0; i<num_sensores; i++){
+    for(i=0; i<num_dallas; i++){
         if(sensors.getAddress(tempDeviceAddress, i)){
             //verifica se o endereço do sensor i é igual ao endereço cadastrado pra cada sensor Tj
             if(tempDeviceAddress == sens_t1) Serial.printf("[SENSOR T%d (ID %d)]:\n", 1, i);
@@ -88,7 +88,7 @@ void configSensores(){
 		    Serial.printf("Não foi possível detectar o endereço ou definir a resolução.");
 	    }
     }
-    Serial.printf("Total de sensores DS18B20 conectados: %d\n", num_sensores);
+    Serial.printf("Total de sensores DS18B20 conectados: %d\n", num_dallas);
     Serial.printf("--- Fim da listagem ---\n");
     return;
 }
