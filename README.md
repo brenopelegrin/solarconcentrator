@@ -1,4 +1,4 @@
-# <img src="https://concentradorsolar.vercel.app/files/images/gota.png" width="250" height="250" /> Concentrador Solar
+# <img src="https://concentradorsolar.vercel.app/files/images/gota.png" width="100" height="100" /> Concentrador Solar
 
 ## O projeto
 
