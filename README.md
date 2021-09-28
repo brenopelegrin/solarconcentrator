@@ -18,16 +18,18 @@ O projeto foi desenvolvido pelos seguintes alunos do Curso Técnico em Mecatrôn
 
 ------------
 
-## Diretórios
+## Partes do projeto
 ###  /solarconcentrator/web/
-Nesse diretório são dispostos os arquivos do servidor web hospedado na internet que recebe os dados do concentrador solar.
-
+- Nesse diretório são dispostos os arquivos do servidor web hospedado na internet que recebe os dados do concentrador solar.
 
 ### /solarconcentrator/esp32/
-Nesse diretório é disposto o código fonte do ESP32, responsável por controlar o concentrador solar e enviar os dados à instância web.
-#### main.cpp
-Nesse arquivo é realizada a sequência de inicialização de rede, sensores e sistema de arquivos do microcontrolador em ```void setup()``` e também, a configuração e execução do servidor web interno do ESP32, utilizado para configurar a rede Wi-Fi, dados geográficos, servidor NTP e variáveis internas.
+- Nesse diretório é disposto o código fonte do ESP32, responsável por controlar o concentrador solar e enviar os dados à instância web.
 
 ### /solarconcentrator/schematic/
-Nesse diretório são dispostos os diagramas esquemáticos e montagem da estrutura mecânica e elétrica do projeto.
+- Nesse diretório são dispostos os diagramas esquemáticos e montagem da estrutura mecânica e elétrica do projeto.
 
+| Parte | Documentação |
+| ------ | ------ |
+| web | [web/README.md][PlDb] |
+| esp32 | [esp32/README.md][PlGh] |
+| schematic | [schematic/README.md][PlGd] |
