@@ -1,4 +1,4 @@
-# Concentrador Solar
+# <img src="https://concentradorsolar.vercel.app/files/images/gota.png" width="80" height="80" /> Concentrador Solar
 
 ## O projeto
 
@@ -18,14 +18,18 @@ O projeto foi desenvolvido pelos seguintes alunos do Curso Técnico em Mecatrôn
 
 ------------
 
-## Diretórios
+## Partes do projeto
 ###  /solarconcentrator/web/
-Nesse diretório são dispostos os arquivos do servidor web hospedado na internet que recebe os dados do concentrador solar.
-
+- Nesse diretório são dispostos os arquivos do servidor web hospedado na internet que recebe os dados do concentrador solar.
 
 ### /solarconcentrator/esp32/
-Nesse diretório é disposto o código fonte do ESP32, responsável por controlar o concentrador solar e enviar os dados à instância web.
+- Nesse diretório é disposto o código fonte do ESP32, responsável por controlar o concentrador solar e enviar os dados à instância web.
 
 ### /solarconcentrator/schematic/
-Nesse diretório são dispostos os diagramas esquemáticos e montagem da estrutura mecânica e elétrica do projeto.
+- Nesse diretório são dispostos os diagramas esquemáticos e montagem da estrutura mecânica e elétrica do projeto.
 
+| Parte | Documentação |
+| ------ | ------ |
+| web | [web/README.md](web/README.md) |
+| esp32 | [esp32/README.md](esp32/README.md) |
+| schematic | [schematic/README.md](schematic/README.md) |
