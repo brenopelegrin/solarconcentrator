@@ -3,3 +3,6 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
+data/syscfg/ssid_host.txt
+data/syscfg/pwd_host.txt
+
