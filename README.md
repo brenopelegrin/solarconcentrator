@@ -30,6 +30,6 @@ O projeto foi desenvolvido pelos seguintes alunos do Curso Técnico em Mecatrôn
 
 | Parte | Documentação |
 | ------ | ------ |
-| web | [web/README.md][PlDb] |
-| esp32 | [esp32/README.md][PlGh] |
-| schematic | [schematic/README.md][PlGd] |
+| web | [web/README.md](web/README.md) |
+| esp32 | [esp32/README.md](esp32/README.md) |
+| schematic | [schematic/README.md](schematic/README.md) |
