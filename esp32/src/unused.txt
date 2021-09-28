@@ -30,3 +30,18 @@ void logtempo(){
 Serial.printf("[%s] ", asctime(&horario_calendario));
                 Serial.println("[Teste de data]");
                 Serial.printf("[%s, %d:%d:%d %d/%d/%d]", convertetempo(7, pegatempo(7)), pegatempo(1), pegatempo(2), pegatempo(3), pegatempo(6), pegatempo(5), pegatempo(4));
+
+
+
+float t1 = 0.0;
+float t2 = 0.0;
+float t3 = 0.0;
+float t4 = 0.0;
+float t5 = 0.0;
+float t6 = 0.0;
+float t7 = 0.0;
+float t8 = 0.0;
+float t9 = 0.0;
+float t10 = 0.0;
+
+

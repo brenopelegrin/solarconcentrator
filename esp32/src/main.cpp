@@ -33,9 +33,9 @@ int extSD_status = 0;
 
 //outras partes do programa
 #include "tempo.h"
+#include "sensores.h"
 #include "envia.h"
 #include "rastreamento.h"
-#include "sensores.h"
  
 AsyncWebServer server(80);
 
@@ -135,7 +135,6 @@ void auth_timer(void * parameters){
 }
 
 void conecta_host(void * parameters){
-  
   WiFi.disconnect(true);
   Serial.println("[CREDENCIAIS - STATION]");
   Serial.print("SSID: ");
@@ -206,7 +205,7 @@ String dashboard_processor(const String& var)
     return dado;
   }
   if(var == "PLACEHOLDER_IPLOCAL"){
-    return String(WiFi.localIP());
+    return WiFi.localIP().toString();
   }
   if(var == "PLACEHOLDER_NTPSTATUS"){
     String dado = "";
@@ -343,14 +342,14 @@ void start_server(){
   server.on("/files/termometro.png", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LITTLEFS, "/files/termometro.png", "image/png");
   });
-  server.on("/files/alimentacao.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LITTLEFS, "/files/termometro.png", "image/png");
+  server.on("/files/charging.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/charging.png", "image/png");
   });
   server.on("/files/motor.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LITTLEFS, "/files/termometro.png", "image/png");
+    request->send(LITTLEFS, "/files/motor.png", "image/png");
   });
-  server.on("/files/buzzer.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LITTLEFS, "/files/termometro.png", "image/png");
+  server.on("/files/led.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/led.png", "image/png");
   });
 
   //fontes
@@ -403,7 +402,7 @@ void start_server(){
                   "AuthTimer",      //task name
                   1024,             //stack size
                   NULL,             //parameters to pass to the task
-                  4,                //priority
+                  5,                //priority
                   NULL,             //task handle
                   PRO_CPU_NUM);               //cpu id
 
@@ -449,7 +448,7 @@ void start_server(){
           "ConectaWifi",    //task name
           8192,             //stack size
           NULL,             //parameters to pass to the task
-          4,                //priority
+          1,                //priority
           NULL,     //task handle
           PRO_CPU_NUM);               //cpu id
     }
@@ -467,6 +466,8 @@ void start_server(){
 }
 
 void setup(){
+  pinMode(25, INPUT_PULLUP); //Sensor vazão
+  //attachInterrupt(digitalPinToInterrupt(25), pulseCounter, FALLING); //interrupção sensor vazão
 
   setlocale (LC_ALL, "Portuguese");
   //inicia o Serial para debug

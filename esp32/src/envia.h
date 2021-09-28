@@ -7,22 +7,6 @@ int server_status=0;
 String apiServer = "https://concentradorsolar.000webhostapp.com/send";
 String serverStatus = "https://concentradorsolar.000webhostapp.com/status";
 
-//dados teste
-float t1 = 33.2234;
-float t2 = 34.2145;
-float t3 = 42.1123;
-float t4 = 43.1124;
-float t5 = 41.6654;
-float t6 = 41.6654;
-float t7 = 41.6654;
-float t8 = 40.5651;
-float t9 = 36.1654;
-float t10 = 39.6654;
-float vento = 8.3104;
-float luminosidade = 1274.1142;
-float radiacao = 1123.2324;
-float vazao = 0.12345678;
-
 int stack_count = 1;
 
 void geradados(void * parameters){
@@ -225,7 +209,7 @@ void start_enviadados(){
             "esp2api-stack",      //task name
             8192,           //stack size
             NULL,           //parameters to pass to the task
-            3,              //priority
+            4,              //priority
             NULL,           //task handle
             APP_CPU_NUM);   //cpu id
         return;
@@ -242,7 +226,7 @@ void start_geradados(){
             "geraDados",    //task name
             8192,           //stack size
             NULL,           //parameters to pass to the task
-            2,              //priority
+            5,              //priority
             NULL,           //task handle
             APP_CPU_NUM);             //cpu id
         return;

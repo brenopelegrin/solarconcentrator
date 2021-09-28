@@ -228,7 +228,7 @@ void ntpsync_timer(void * parameters){
                     "AtualizaTempo",   //task name
                     1024,             //stack size
                     NULL,             //parameters to pass to the task
-                    2,                //priority
+                    1,                //priority
                     NULL,             //task handle
                     PRO_CPU_NUM);               //cpu id
                 }
@@ -261,7 +261,7 @@ void start_timesync(){
             "NTPSyncTimer",   //task name
             2048,             //stack size
             NULL,             //parameters to pass to the task
-            3,                //priority
+            2,                //priority
             NULL,             //task handle
             PRO_CPU_NUM);               //cpu id
         ntp_running=1;
