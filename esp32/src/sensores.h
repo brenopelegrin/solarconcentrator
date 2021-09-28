@@ -42,6 +42,9 @@ float t8 = 0.0;
 float t9 = 0.0;
 float t10 = 0.0;
 
+float leitura_anemometro = 0.0;
+float leitura_piranometro = 0.0;
+
 //tutorial indiano
 #define LED_BUILTIN 2
 #define SENSOR  27

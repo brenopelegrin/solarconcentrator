@@ -182,8 +182,37 @@ void handler_webconfigwifi(){
   return;
 }
 
-String dashboard_processor(const String& var)
-{
+String dashboard_processor(const String& var){
+  if(var == "PLACEHOLDER_PIRANOMETROSTATUS"){
+    String dado = "";
+    if (leitura_piranometro == 0.0){
+      dado+="Sem leitura";
+    }
+    else{
+      dado += "Operante";
+    }
+    return dado;
+  }
+  if(var == "PLACEHOLDER_ANEMOMETROSTATUS"){
+    String dado = "";
+    if (leitura_anemometro == 0.0){
+      dado+="Sem leitura";
+    }
+    else{
+      dado += "Operante";
+    }
+    return dado;
+  }
+  if(var == "PLACEHOLDER_VAZAOSTATUS"){
+    String dado = "";
+    if (flowMilliLitres == 0){
+      dado+="Sem leitura";
+    }
+    else{
+      dado += "Operante";
+    }
+    return dado;
+  }
   if(var == "PLACEHOLDER_SDSTATUS"){
     String dado = "";
     if (extSD_status){
@@ -227,7 +256,7 @@ String dashboard_processor(const String& var)
     }
     return dado;
   }
-  if(var == "PLACEHOLDER_TEMPERATURA"){
+  if(var == "PLACEHOLDER_DS18B20STATUS"){
     String dado = "";
     dado += String(num_dallas, 2);
     dado += " operantes";
