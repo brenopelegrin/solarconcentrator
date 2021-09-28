@@ -1,6 +1,4 @@
-# Concentrador Solar
-
-![Logo](https://concentradorsolar.vercel.app/files/images/gota.png)
+# ![Logo](https://concentradorsolar.vercel.app/files/images/gota.png) Concentrador Solar
 
 ## O projeto
 
