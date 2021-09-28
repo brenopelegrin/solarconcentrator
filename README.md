@@ -25,6 +25,8 @@ Nesse diretório são dispostos os arquivos do servidor web hospedado na interne
 
 ### /solarconcentrator/esp32/
 Nesse diretório é disposto o código fonte do ESP32, responsável por controlar o concentrador solar e enviar os dados à instância web.
+#### main.cpp
+Nesse arquivo é realizada a sequência de inicialização de rede, sensores e sistema de arquivos do microcontrolador em ```void setup()``` e também, a configuração e execução do servidor web interno do ESP32, utilizado para configurar a rede Wi-Fi, dados geográficos, servidor NTP e variáveis internas.
 
 ### /solarconcentrator/schematic/
 Nesse diretório são dispostos os diagramas esquemáticos e montagem da estrutura mecânica e elétrica do projeto.
