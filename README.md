@@ -1,5 +1,7 @@
 # Concentrador Solar
 
+![Logo](https://concentradorsolar.vercel.app/files/images/gota.png)
+
 ## O projeto
 
 Nesse repositório são armazenados os arquivos utilizados na *construção do seguinte Trabalho de Conclusão de Curso:
