@@ -1,4 +1,4 @@
-# ![](https://concentradorsolar.vercel.app/files/images/gota.png = 250x250) Concentrador Solar
+# <img src="https://concentradorsolar.vercel.app/files/images/gota.png" width="250" height="250" /> Concentrador Solar
 
 ## O projeto
 
