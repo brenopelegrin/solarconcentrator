@@ -27,6 +27,7 @@ const char *meses[12] = {"Janeiro",
                     "Outubro",
                     "Novembro",
                     "Dezembro"  };
+
 const char *semana[7] = {"Domingo",
                     "Segunda-feira",
                     "Terça-feira",
@@ -42,6 +43,8 @@ int atualizatempo_running = 0;
 int extrtc_status = 0;
 
 void atualizatempo(void * parameters){
+    atualizatempo_running=1;
+    Serial.printf("\n[AtualizaTempo] Tarefa iniciada no nucleo %i com prioridade %i. \n", xPortGetCoreID(), uxTaskPriorityGet(NULL));
     while (1){
         if (ntp_running) {
             if(!getLocalTime(&horario_calendario)){
@@ -54,6 +57,7 @@ void atualizatempo(void * parameters){
         tempo_rtc = rtc.now();
         vTaskDelay(1000);
     }
+    atualizatempo_running = 0;
     vTaskDelete(NULL);
 }
 
@@ -196,6 +200,8 @@ void logtempo(){
 }
 
 void ntpsync_timer(void * parameters){
+    ntp_running=1;
+    Serial.printf("\n[NTPSyncTimer] Tarefa iniciada no nucleo %i com prioridade %i. \n", xPortGetCoreID(), uxTaskPriorityGet(NULL));
     while(1){
         getLocalTime(&horario_calendario);
         time(&horario_epoch);
@@ -204,21 +210,21 @@ void ntpsync_timer(void * parameters){
             vTaskDelay(500);    
         }
         if (sync_delay == 0 && connection_status == "ok"){ //ta na hora da brincadeira!
-            Serial.print("[NTP] Obtendo tempo do servidor ");
+            Serial.print("[NTPSyncTimer] Obtendo tempo do servidor ");
             Serial.println(ntpServer);
             configTime(gmtOffset_sec, daylightOffset_sec, ntpServer); //configura o tempo do esp
             if(!getLocalTime(&horario_calendario)){
                 ntp_status = 0;
-                Serial.println("[NTP] Falha ao obter o tempo.");    //deu ruim
+                Serial.println("[NTPSyncTimer] Falha ao obter o tempo.");    //deu ruim
             }
             else{   //deu certo
                 time(&horario_epoch);
                 rtc.adjust(DateTime(horario_calendario.tm_year+1900, horario_calendario.tm_mon+1, horario_calendario.tm_mday, horario_calendario.tm_hour, horario_calendario.tm_min, horario_calendario.tm_sec));
-                Serial.println("[extRTC] Definindo o horário do RTC externo.");
+                Serial.println("[NTPSyncTimer] Definindo o horário do RTC externo.");
                 Serial.println("[NTP] Tempo sincronizado com sucesso!");
-                Serial.print("[NTP] Calendario gregoriano: ");
+                Serial.print("[NTPSyncTimer] Calendario gregoriano: ");
                 Serial.println(&horario_calendario, "%A, %d/%B/%Y %H:%M:%S");
-                Serial.print("[NTP] EPOCH time: ");
+                Serial.print("[NTPSyncTimer] EPOCH time: ");
                 Serial.println(horario_epoch);
                 ntp_status = 1;
                 sync_delay = 10*60*1000;
@@ -254,7 +260,6 @@ void start_timesync(){
         extrtc_status=1;
     }
 
-    Serial.println("[SISTEMA] Iniciando a tarefa NTPSyncTimer.");
     if (!ntp_running){
         xTaskCreatePinnedToCore(
             ntpsync_timer,    //task function
@@ -264,7 +269,6 @@ void start_timesync(){
             2,                //priority
             NULL,             //task handle
             PRO_CPU_NUM);               //cpu id
-        ntp_running=1;
         return;
     }
     else Serial.println("[SISTEMA] Houve uma tentativa de iniciar a tarefa NTPSyncTimer, mas ela ja esta rodando.");

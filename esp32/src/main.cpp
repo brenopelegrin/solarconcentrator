@@ -6,11 +6,11 @@
 #include <esp_ipc.h>
 #include <locale.h>
 
+#include "gpio.h"
 #include "arquivos.h"
 #include "WiFi.h"
 #include "ESPAsyncWebServer.h"
 
-#define BUZZER_PIN 18
 #define BUZZER_CHANNEL 0
 
 //credenciais da rede AP
@@ -123,6 +123,7 @@ void WiFiEvent(WiFiEvent_t event) {
 }}
 
 void auth_timer(void * parameters){
+  Serial.printf("\n[AuthTimer] Tarefa iniciada no nucleo %i com prioridade %i. \n", xPortGetCoreID(), uxTaskPriorityGet(NULL));
   int auth_delay = 60000;
   while(auth_delay > 0){
     auth_delay-=500;
@@ -130,18 +131,19 @@ void auth_timer(void * parameters){
   }
   auth = 0;
   logtempo();
-  Serial.println("[WEB] Autenticacao expirada apos 1 minuto.");
+  Serial.println("[AuthTimer] Autenticacao expirada apos 1 minuto.");
   vTaskDelete(NULL);
 }
 
 void conecta_host(void * parameters){
+  Serial.printf("\n[ConectaWifi] Tarefa iniciada no nucleo %i com prioridade %i. \n", xPortGetCoreID(), uxTaskPriorityGet(NULL));
   WiFi.disconnect(true);
   Serial.println("[CREDENCIAIS - STATION]");
   Serial.print("SSID: ");
   Serial.println(ssid_host);
   Serial.print("PASSWORD: ");
   Serial.println(pwd_host);
-  Serial.println("\n[WIFI] Conectando ao WiFi Station. [15 seg]");
+  Serial.println("\n[ConectaWifi] Conectando ao WiFi Station. [15 seg]");
   WiFi.begin(ssid_host.c_str(), pwd_host.c_str());
   connection_status="connecting";
   int tempo = 15000;
@@ -150,7 +152,7 @@ void conecta_host(void * parameters){
     vTaskDelay(500);
   }
   if (tempo <=0 && WiFi.status() != WL_CONNECTED){
-    Serial.println("[WIFI] ERRO: Tempo de conexao esgotado. Retornando ao modo AP.");
+    Serial.println("[ConectaWifi] ERRO: Tempo de conexao esgotado. Retornando ao modo AP.");
     WiFi.disconnect(true);
     connection_status="fail";
     ssid_host = "null";
@@ -159,7 +161,7 @@ void conecta_host(void * parameters){
   }
 
   connection_status="ok";
-  Serial.println("[WIFI] Conectado!");
+  Serial.println("[ConectaWifi] Conectado!");
   Serial.print("IP: ");
   Serial.println(WiFi.localIP());
   Serial.println(" ");
@@ -172,7 +174,7 @@ void conecta_host(void * parameters){
   writeFile(LITTLEFS, "/syscfg/pwd_host.txt", pwd_host.c_str());
 
   start_timesync();
-  start_enviadados();
+  start_esp2api();
 
   vTaskDelete(NULL);
 }
@@ -359,8 +361,8 @@ void start_server(){
   server.on("/files/local-network.png", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LITTLEFS, "/files/local-network.png", "image/png");
   });
-  server.on("/files/anenometro.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LITTLEFS, "/files/anenometro.png", "image/png");
+  server.on("/files/anemometro.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(LITTLEFS, "/files/anemometro.png", "image/png");
   });
   server.on("/files/database.png", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LITTLEFS, "/files/database.png", "image/png");
@@ -495,10 +497,9 @@ void start_server(){
 }
 
 void setup(){
-  pinMode(25, INPUT_PULLUP); //Sensor vazão
-  //attachInterrupt(digitalPinToInterrupt(25), pulseCounter, FALLING); //interrupção sensor vazão
+  configura_gpio();
 
-  setlocale (LC_ALL, "Portuguese");
+  setlocale(LC_ALL, "Portuguese");
   //inicia o Serial para debug
   Serial.begin(115200);  
 
@@ -594,6 +595,7 @@ void setup(){
   }
 
   configSensores();
+  start_readsensores();
   start_geradados();  //inicia a task de gerar dados aleatorios (asincrono)
 
   WiFi.onEvent(WiFiEvent); //quando tiver um evento do wifi, printa (asincrono)

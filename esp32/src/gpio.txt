@@ -31,3 +31,19 @@ VAZAO
 IN              GPIO 25
 GND             GND
 ---------------------------------
+
+---------------------------------
+ANEMOMETRO
+https://www.youtube.com/watch?v=AgZYoUZm8_4&t=196s
+https://www.usinainfo.com.br/estacao-meteorologica-arduino/anemometro-arduino-sensor-de-vento-para-estacao-meteorologica-sv10-3686.html
+IN              GPIO 27
+GND             GND
+---------------------------------
+
+---------------------------------
+MOTOR
+EN              GPIO 4
+DIR             GPIO 0
+PUL             GPIO 2
+---------------------------------
+

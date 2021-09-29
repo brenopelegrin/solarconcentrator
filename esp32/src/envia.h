@@ -1,7 +1,8 @@
 #include <HTTPClient.h>
 int enviado=0;
 int enviado_stack=0;
-int enviadados_running=0;
+int esp2api_running=0;
+int esp2apistack_running=0;
 int geradados_running=0;
 int server_status=0;
 String apiServer = "https://concentradorsolar.000webhostapp.com/send";
@@ -10,6 +11,8 @@ String serverStatus = "https://concentradorsolar.000webhostapp.com/status";
 int stack_count = 1;
 
 void geradados(void * parameters){
+    geradados_running = 1;
+    Serial.printf("\n[geraDados] Tarefa iniciada no nucleo %i com prioridade %i. \n", xPortGetCoreID(), uxTaskPriorityGet(NULL));
     while(1){
         srand(horario_epoch);
         t1 = (rand() % (55 - 10 + 1)) + 10;
@@ -34,18 +37,19 @@ void geradados(void * parameters){
         t10 = (rand() % (55 - 10 + 1)) + 10;
         t10 += (float)((rand() % (1000 - 300 + 1)) + 300)/147;
         srand(horario_epoch+2);
-        vento = (rand() % (19 - 1 + 1)) + 1;
-        vento += (float)((rand() % (478 - 200 + 1)) + 150)/147;
+        windspeed_ms = (rand() % (19 - 1 + 1)) + 1;
+        windspeed_ms += (float)((rand() % (478 - 200 + 1)) + 150)/147;
         luminosidade = (rand() % (1000 - 0 + 1)) + 0;
-        vento = (rand() % (19 - 1 + 1)) + 1;
-        vento += (float)((rand() % (478 - 200 + 1)) + 150)/147;
+        windspeed_ms = (rand() % (19 - 1 + 1)) + 1;
+        windspeed_ms += (float)((rand() % (478 - 200 + 1)) + 150)/147;
         radiacao = (rand() % (1700 - 100 + 1)) + 1;
         radiacao += (float)((rand() % (478 - 200 + 1)) + 150)/147;
-        vazao = (rand() % (400 - 0 + 1)) + 0;
-        vazao=vazao/1000;
-        vazao += (float)((rand() % (478 - 200 + 1)))/1470;
+        flowMilliLitres = (rand() % (400 - 0 + 1)) + 0;
+        flowMilliLitres=flowMilliLitres/1000;
+        flowMilliLitres += (float)((rand() % (478 - 200 + 1)))/1470;
         vTaskDelay(1000*60);
     }
+    geradados_running = 0;
     vTaskDelete(NULL);
 }
 
@@ -55,9 +59,9 @@ void enviadados_stack(void * parameters){
     //quando reconecta, o ESP pausa a tarefa esp2api
     //e manda os dados do stack
     //depois retoma a tarefa esp2api
-
+    esp2apistack_running = 1;
     logtempo();
-    Serial.printf("[esp2api-stack] Tarefa iniciada no nucleo %i. \n", xPortGetCoreID());
+    Serial.printf("\n[esp2api-stack] Tarefa iniciada no nucleo %i com prioridade %i. \n", xPortGetCoreID(), uxTaskPriorityGet(NULL));
     enviado_stack=0;
     HTTPClient http_stack;
     while(1){
@@ -112,12 +116,14 @@ void enviadados_stack(void * parameters){
             }
         }
     }
+    esp2apistack_running = 0;
     vTaskDelete(NULL);
 }
 
 void enviadados(void * parameters){
+    esp2api_running=1;
     logtempo();
-    Serial.printf("[esp2api] Tarefa iniciada no nucleo %i. \n", xPortGetCoreID());
+    Serial.printf("\n[esp2api] Tarefa iniciada no nucleo %i com prioridade %i. \n", xPortGetCoreID(), uxTaskPriorityGet(NULL));
     enviado=0;
     HTTPClient http;
     while(1){
@@ -136,10 +142,10 @@ void enviadados(void * parameters){
                 path+=  "&t8="+String(t8,4);
                 path+=  "&t9="+String(t9,4);
                 path+=  "&t10="+String(t10,4);
-                path+=  "&vento="+String(vento,4);
+                path+=  "&vento="+String(windspeed_ms,4);
                 path+=  "&luminosidade="+String(luminosidade,4);
                 path+=  "&radiacao="+String(radiacao,4);
-                path+=  "&vazao="+String(vazao,4);
+                path+=  "&vazao="+String(flowMilliLitres,4);
                 //manda
                 Serial.println(path);
                 http.begin(path.c_str());
@@ -191,11 +197,8 @@ void enviadados(void * parameters){
     vTaskDelete(NULL);
 }
 
-void start_enviadados(){
-    if (!enviadados_running && geradados_running){
-        logtempo();
-        Serial.println("[SISTEMA] Iniciando a tarefa esp2api.");
-        enviadados_running=1;
+void start_esp2api(){
+    if (!esp2api_running){
         xTaskCreatePinnedToCore(
             enviadados,     //task function
             "esp2api",      //task name
@@ -204,6 +207,8 @@ void start_enviadados(){
             3,              //priority
             NULL,           //task handle
             APP_CPU_NUM);   //cpu id
+    }
+    if (!esp2apistack_running){
         xTaskCreatePinnedToCore(
             enviadados_stack,     //task function
             "esp2api-stack",      //task name
@@ -212,8 +217,8 @@ void start_enviadados(){
             4,              //priority
             NULL,           //task handle
             APP_CPU_NUM);   //cpu id
-        return;
     }
+    return;
 }
 
 void start_geradados(){

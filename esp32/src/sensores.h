@@ -1,4 +1,3 @@
-#define ONE_WIRE_BUS 21
 #define TEMPERATURE_PRECISION 9
 
 #include <OneWire.h>
@@ -28,8 +27,7 @@ float vazao = 0.12345678;
 
 int num_dallas = 0;
 int vazao_status = 0;
-int anenometro_status = 0;
-int piranometro_status = 0;
+int readsensores_running = 0;
 
 float t1 = 0.0;
 float t2 = 0.0;
@@ -45,33 +43,38 @@ float t10 = 0.0;
 float leitura_anemometro = 0.0;
 float leitura_piranometro = 0.0;
 
-//tutorial indiano
-#define LED_BUILTIN 2
-#define SENSOR  27
-
+//VARIAVEIS DO SENSOR DE VAZAO
 long currentMillis = 0;
 long previousMillis = 0;
 int interval = 1000;
 boolean ledState = LOW;
 float calibrationFactor = 4.5;
-volatile byte pulseCount = 0;
 byte pulse1Sec = 0;
 float flowRate = 0.0;
 unsigned int flowMilliLitres = 0;
 unsigned long totalMilliLitres = 0;
+//FIM DAS VARIAVEIS DO SENSOR DE VAZAO
 
-void IRAM_ATTR pulseCounter()
-{
-  pulseCount++;
-}
+//VARIAVEIS DO ANEMOMETRO
+const float pi = 3.14159265;     //Número de pi
+int period = 1000;               //Tempo de medida(miliseconds)
+int delaytime_anemometro = 1000; //Invervalo entre as amostras (miliseconds)
+int radius = 147;                //Raio do anemometro(mm)
+unsigned int Sample  = 0;        //Armazena o número de amostras
+unsigned int RPM = 0;            //Rotações por minuto
+float windspeed_ms = 0.0;        //Velocidade do vento (m/s)
+//FIM DAS VARIAVEIS DO ANEMOMETRO
 
 //falta iniciar a tarefa
-void read_sensores(void * parameters){
+void readsensores(void * parameters){
+    readsensores_running = 1;
+    Serial.printf("\n[ReadSensores] Tarefa iniciada no nucleo %i com prioridade %i. \n", xPortGetCoreID(), uxTaskPriorityGet(NULL));
     while(1){
         currentMillis = millis();
         if (currentMillis - previousMillis > interval) {
-            pulse1Sec = pulseCount;
-            pulseCount = 0;
+            
+            pulse1Sec = counterVAZAO_var;
+            counterVAZAO_var = 0;
 
             // Because this loop may not complete in exactly 1 second intervals we calculate
             // the number of milliseconds that have passed since the last execution and use
@@ -102,8 +105,27 @@ void read_sensores(void * parameters){
         t8 = sensors.getTempC(sens_t8);
         t9 = sensors.getTempC(sens_t9);
         t10 = sensors.getTempC(sens_t10);
+
+        //inicia logica do sensor ANEMOMETRO
+        Sample++;
+        //le o sensor de anemometro
+        windspeed_ms = 0;
         
+        counterANEMOMETRO_var = 0;  
+        attachInterrupt(digitalPinToInterrupt(PINO_ANEMOMETRO), counterANEMOMETRO, RISING);
+        unsigned long millis();       
+        long startTime = millis();
+        while(millis() < startTime + period) {}
+        //fim da leitura
+
+        RPM=((counterANEMOMETRO_var)*60)/(period/1000);  // Calculate revolutions per minute (RPM)
+        windspeed_ms = ((4 * pi * radius * RPM)/60) / 1000;  //Calcula a velocidade do vento em m/s
+
+        vTaskDelay(delaytime_anemometro);                        //taxa de atualização
+        //FIM DA LOGICA DO ANEMOMETRO
     }
+    vTaskDelete(NULL);
+    readsensores_running = 0;
 }
 
 void printAddress(DeviceAddress deviceAddress)
@@ -174,5 +196,19 @@ void configSensores(){
     Serial.printf("Total de sensores DS18B20 conectados: %d\n", num_dallas);
     Serial.printf("--- Fim da listagem ---\n");
 
+    return;
+}
+
+void start_readsensores(){
+    if(!readsensores_running){
+        xTaskCreatePinnedToCore(
+            readsensores,     //task function
+            "ReadSensores",    //task name
+            8192,             //stack size
+            NULL,             //parameters to pass to the task
+            1,                //priority
+            NULL,             //task handle
+            PRO_CPU_NUM);     //cpu id
+    }
     return;
 }
