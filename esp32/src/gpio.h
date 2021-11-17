@@ -1,9 +1,10 @@
 #define LED_BUILTIN 2
 #define BUZZER_PIN 18
-#define ONE_WIRE_BUS 21
+#define ONE_WIRE_BUS 16
 #define PINO_ANEMOMETRO 27
 #define PINO_VAZAO 25
 #define EN_MOTOR 4
+#define PINO_PIRANOMETRO 26
 #define DIR_MOTOR 0
 #define PUL_MOTOR 2
 

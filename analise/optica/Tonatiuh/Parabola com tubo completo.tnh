@@ -1,0 +1,220 @@
+#Inventor V2.1 ascii
+
+
+TSceneKit {
+  fields [ SFFloat azimuth, SFFloat zenith, SFNode callbackList, SFNode cameraList, SFNode lightList, SFNode childList, SFNode transmissivity, SFNode topSeparator ]
+  azimuth 0
+  zenith 0
+  lightList 
+  NodeKitListPart {
+    childTypeNames "LightKit"
+    containerNode 
+    Group {
+
+      DEF Light+0 TLightKit {
+        fields [ SFFloat azimuth, SFFloat zenith, SFString disabledNodes, SFNode callbackList, SFNode transform, SFNode light, SFNode icon, SFNode iconMaterial, SFNode iconTexture, SFNode tsunshape, SFNode transformGroup, SFNode iconSeparator ]
+        azimuth 0
+        zenith 0
+        disabledNodes ""
+        transform 
+        Transform {
+          translation 0 10.6592 0
+
+        }
+        light 
+        DirectionalLight {
+          direction 0 -1 0
+
+        }
+        icon 
+        TLightShape {
+          fields [ SFFloat xMin, SFFloat xMax, SFFloat zMin, SFFloat zMax, SFFloat delta ]
+          xMin -1.3670359
+          xMax 1.367036
+          zMin -1.9650358
+          zMax 0.76503593
+          delta 0.46503583
+
+        }
+        iconMaterial 
+        Material {
+          transparency 0.5
+
+        }
+        iconTexture 
+        Texture2 {
+          image 5 5 1
+          0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0
+          0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0
+          0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0
+          0x0 
+          wrapS CLAMP
+          wrapT CLAMP
+          model BLEND
+          blendColor 0.93300003 0.91000003 0.66600001
+
+        }
+        tsunshape 
+        SunshapeBuie {
+          fields [ SFFloat irradiance, SFFloat csr ]
+
+        }
+
+      }
+    }
+
+  }
+  childList 
+  NodeKitListPart {
+    childTypeNames [ "ShapeKit",
+        "SeparatorKit" ]
+    containerNode 
+    Group {
+
+      DEF SunNode TSeparatorKit {
+        fields [ SFEnum renderCaching, SFEnum boundingBoxCaching, SFEnum renderCulling, SFEnum pickCulling, SFNode callbackList, SFNode pickStyle, SFNode appearance, SFNode units, SFNode transform, SFNode texture2Transform, SFNode childList, SFNode tracker, SFNode topSeparator ]
+        transform 
+        Transform {
+          translation 0 0 0 =
+          DEF +1 TSceneTracker {
+            fields [ SFFloat m_azimuth, SFFloat m_zenith ]
+            m_azimuth 0 =
+            USE Light+0            . azimuth
+            m_zenith 0 =
+            USE Light+0            . zenith
+
+          }          . outputTranslation
+          rotation 0 -1 0  3.1415927 =
+          USE +1          . outputRotation
+          scaleFactor 1 1 1 =
+          USE +1          . outputScaleFactor
+          scaleOrientation 0 0 1  0 =
+          USE +1          . outputScaleOrientation
+          center 0 0 0 =
+          USE +1          . outputCenter
+
+        }
+        childList 
+        NodeKitListPart {
+          containerTypeName "Separator"
+          childTypeNames [ "ShapeKit",
+              "SeparatorKit" ]
+          containerNode 
+          Separator {
+
+            DEF RootNode TSeparatorKit {
+              fields [ SFEnum renderCaching, SFEnum boundingBoxCaching, SFEnum renderCulling, SFEnum pickCulling, SFNode callbackList, SFNode pickStyle, SFNode appearance, SFNode units, SFNode transform, SFNode texture2Transform, SFNode childList, SFNode tracker, SFNode topSeparator ]
+              transform 
+              Transform {
+
+              }
+              childList 
+              NodeKitListPart {
+                containerTypeName "Separator"
+                childTypeNames [ "ShapeKit",
+                    "SeparatorKit" ]
+                containerNode 
+                Separator {
+
+                  DEF Refletivos TSeparatorKit {
+                    fields [ SFEnum renderCaching, SFEnum boundingBoxCaching, SFEnum renderCulling, SFEnum pickCulling, SFNode callbackList, SFNode pickStyle, SFNode appearance, SFNode units, SFNode transform, SFNode texture2Transform, SFNode childList, SFNode tracker, SFNode topSeparator ]
+                    transform 
+                    Transform {
+
+                    }
+                    childList 
+                    NodeKitListPart {
+                      containerTypeName "Separator"
+                      childTypeNames [ "ShapeKit",
+                          "SeparatorKit" ]
+                      containerNode 
+                      Separator {
+
+                        DEF Parabola TShapeKit {
+                          fields [ SFEnum renderCaching, SFEnum boundingBoxCaching, SFEnum renderCulling, SFEnum pickCulling, SFNode callbackList, SFNode pickStyle, SFNode appearance, SFNode units, SFNode transform, SFNode texture2Transform, SFNode childList, SFNode materialBinding, SFNode normalBinding, SFNode textureCoordinateBinding, SFNode shapeHints, SFNode coordinate3, SFNode coordinate4, SFNode normal, SFNode textureCoordinate2, SFNode textureCoordinateFunction, SFNode profileCoordinate2, SFNode profileCoordinate3, SFNode profileList, SFNode localTransform, SFNode shape, SFNode topSeparator, SFNode shapeSeparator ]
+                          appearance 
+                          AppearanceKit {
+                            material 
+                            DEF Specular_Standard_Material MaterialStandardSpecular {
+                              fields [ SFFloat m_reflectivity, SFFloat m_sigmaSlope, SFEnum m_distribution, MFColor m_ambientColor, MFColor m_diffuseColor, MFColor m_specularColor, MFColor m_emissiveColor, MFFloat m_shininess, MFFloat m_transparency ]
+                              m_reflectivity 0.18000001
+
+                            }
+
+                          }
+                          shape 
+                          DEF Trough_Parabola ShapeTroughParabola {
+                            fields [ SFFloat focusLength, SFFloat xMin, SFFloat xMax, SFFloat lengthXMin, SFFloat lengthXMax, SFEnum activeSide ]
+                            focusLength 0.6365
+                            xMin -0.90200001
+                            xMax 0.90200001
+                            lengthXMin 1.2
+                            lengthXMax 1.2
+                            activeSide OUTSIDE
+
+                          }
+
+                        }
+                      }
+
+                    }
+
+                  }
+                  DEF Absorvedores TSeparatorKit {
+                    fields [ SFEnum renderCaching, SFEnum boundingBoxCaching, SFEnum renderCulling, SFEnum pickCulling, SFNode callbackList, SFNode pickStyle, SFNode appearance, SFNode units, SFNode transform, SFNode texture2Transform, SFNode childList, SFNode tracker, SFNode topSeparator ]
+                    transform 
+                    Transform {
+                      translation 0 0.6365 -0.30000001
+
+                    }
+                    childList 
+                    NodeKitListPart {
+                      containerTypeName "Separator"
+                      childTypeNames [ "ShapeKit",
+                          "SeparatorKit" ]
+                      containerNode 
+                      Separator {
+
+                        DEF TShapeKit1 TShapeKit {
+                          fields [ SFEnum renderCaching, SFEnum boundingBoxCaching, SFEnum renderCulling, SFEnum pickCulling, SFNode callbackList, SFNode pickStyle, SFNode appearance, SFNode units, SFNode transform, SFNode texture2Transform, SFNode childList, SFNode materialBinding, SFNode normalBinding, SFNode textureCoordinateBinding, SFNode shapeHints, SFNode coordinate3, SFNode coordinate4, SFNode normal, SFNode textureCoordinate2, SFNode textureCoordinateFunction, SFNode profileCoordinate2, SFNode profileCoordinate3, SFNode profileList, SFNode localTransform, SFNode shape, SFNode topSeparator, SFNode shapeSeparator ]
+                          appearance 
+                          AppearanceKit {
+                            material 
+                            DEF Specular_Standard_Material MaterialStandardSpecular {
+                              fields [ SFFloat m_reflectivity, SFFloat m_sigmaSlope, SFEnum m_distribution, MFColor m_ambientColor, MFColor m_diffuseColor, MFColor m_specularColor, MFColor m_emissiveColor, MFFloat m_shininess, MFFloat m_transparency ]
+                              m_reflectivity 0.050000001
+
+                            }
+
+                          }
+                          shape 
+                          DEF Cylinder ShapeCylinder {
+                            fields [ SFFloat radius, SFFloat length, SFFloat phiMax, SFEnum activeSide ]
+                            radius 0.022700001
+                            length 1.8
+
+                          }
+
+                        }
+                      }
+
+                    }
+
+                  }
+                }
+
+              }
+
+            }
+          }
+
+        }
+        tracker 
+        USE +1
+
+      }
+    }
+
+  }
+
+}
