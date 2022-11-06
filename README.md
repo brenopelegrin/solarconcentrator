@@ -18,7 +18,7 @@ O projeto foi desenvolvido pelos seguintes alunos do Curso Técnico em Mecatrôn
 
 A API e a interface web do projeto foram desenvolvidas por [Yuri Martins](http://github.com/Stecken "Yuri Martins"), e os esquemáticos eletrônicos e os códigos de baixo nível do ESP32 foram desenvolvidos por [Breno Henrique da Silva](http://github.com/brenopelegrin "Breno Henrique da Silva"). A parte mecânica e análise óptica foram conduzidas pelo restante do grupo e a produção da monografia teve participação de todos os membros do grupo.
 
-A [monografia.pdf](monografia.pdf "monografia") foi defendida no dia 30/11/2021 em reunião on-line do IFSP Câmpus Catanduva, sendo a banca avaliadora composta pelos membros:
+A [monografia](monografia.pdf "monografia") foi defendida no dia 30/11/2021 em reunião on-line do IFSP Câmpus Catanduva, sendo a banca avaliadora composta pelos membros:
 
 - Elson Avallone (orientador)
 - Pablo Sampaio Gomes Natividade (co-orientador)
