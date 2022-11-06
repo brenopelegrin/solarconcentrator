@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Fonte-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+    <!--font-awesome image-->
+
+    <!--
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
+    -->
+    <!---->
+    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet" href="/styles/mainSobre.css">
+    <link rel="stylesheet" href="/styles/navsobre.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+    <!--Jquery - Não usado-->
+    <link rel="sortcut icon" type="imagem/x-icon" href="/files/images/gota.ico" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Concentrador Solar</title>
+
+    <!--Programação - Libs-->
+    <script src="/scripts/nav.js"></script>
+    <script src="/scripts/subpage.js"></script>
+    <script src="/scripts/android.js"></script>
+</head>
+
+<body>
+    <header class="cabeca">
+        <div class="bonito">
+            <img src="/files/images/gota.png" alt="Natura" id="logo">
+            <img src="/files/images/header_linhas.png" alt="Natura" id="flecha-separa">
+            <div class="mesma-linha">
+                <div class="titulo-header">
+                    <a href="/home" id="titulo-tag-a">
+                        <h1 class="titulo especial">Concentrador</h1>
+                        <h1 class="titulo especial" id="solarTitle">Solar</h1>
+                    </a>
+                </div>
+                <img src="/files/images/menu_logo.png" alt="" class="risco3">
+            </div>
+        </div>
+        <div class="menu" id="menu-desktop">
+            <a href="/" class="strong">Home</a>
+            <div class="dropdown">
+                <a href="/sobre" class="strong">Sobre</a>
+                <div class="dropdown-content">
+                    <div class="dropdown-lvl2">
+                        <a class="strong">Integrantes</a>
+                        <div class="dropdown-content lvl2">
+                            <a href="/sobre/alison" class="strong">Alison</a>
+                            <a href="/sobre/breno" class="strong">Breno</a>
+                            <a href="/sobre/paulo" class="strong">Paulo</a>
+                            <a href="/sobre/rafael" class="strong">Rafael</a>
+                            <a href="/sobre/samuel" class="strong">Samuel</a>
+                            <a href="/sobre/yuri" class="strong">Yuri</a>
+                        </div>
+                    </div>
+                    <div class="dropdown-lvl2">
+                        <a class="strong no-link">Orientadores</a>
+                        <div class="dropdown-content lvl2">
+                            <a href="/sobre/elson" class="strong">Elson Avallone</a>
+                            <a href="/sobre/pablo" class="strong">Pablo Sampaio</a>
+                        </div>
+                    </div>
+                    <div class="dropdown-lvl2">
+                        <a class="strong no-link">Trabalho</a>
+                        <div class="dropdown-content lvl2">
+                            <a href="/sobre/monografia/web/viewer.html" target="_blank" class="strong">Monografia</a>
+                            <a href="/sobre/breno" class="strong">Defesa</a>
+                        </div>
+                    </div>
+                    <div class="dropdown-lvl2">
+                        <a class="strong no-link">Site</a>
+                        <div class="dropdown-content lvl2">
+                            <a href="/sobre/alison" class="strong">Informações</a>
+                            <a href="/sobre/breno" class="strong">Contato</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="/dados" class="strong">Dados</a>
+        </div>
+        <div class="menu-mobile">
+            <ul class="menu-ul-mobile">
+                <div id="linha"></div>
+                <li>
+                    <a href="/" class="strong">Home</a>
+                </li>
+                <li>
+                    <input type="checkbox" id="checkbox-lvl1">
+                    <label for="checkbox-lvl1" class="label-lvl1-mobile">
+                        <img src="/files/images/right-icon.svg" alt="seta-direita" id="seta-home" />
+                        <a href="/sobre" class="strong" id="link-lvl1-mobile">Sobre</a>
+                    </label>
+                    <div id="div-lvl2-mobile">
+                        <input type="checkbox" id="checkbox-lvl2-1" class="input-lvl2-mobile">
+                        <label for="checkbox-lvl2-1" class="label-lvl2-mobile">
+                            <a class="strong" class="link-lvl2-mobile">Autores</a>
+                        </label>
+                        <div id="div-lvl3-1">
+                            <a href="/sobre/alison" class="strong">Alison</a>
+                            <a href="/sobre/breno" class="strong">Breno</a>
+                            <a href="/sobre/paulo" class="strong">Paulo</a>
+                            <a href="/sobre/rafael" class="strong">Rafael</a>
+                            <a href="/sobre/samuel" class="strong">Samuel</a>
+                            <a href="/sobre/yuri" class="strong">Yuri</a>
+                        </div>
+                        <input type="checkbox" id="checkbox-lvl2-2" class="input-lvl2-mobile">
+                        <label for="checkbox-lvl2-2" class="label-lvl2-mobile">
+                            <a class="strong" class="link-lvl2-mobile">Orientadores</a>
+                        </label>
+                        <div id="div-lvl3-2">
+                            <a href="/sobre/elson" class="strong" class="link-lvl3-mobile">Elson Avallone</a>
+                            <a href="/sobre/pablo" class="strong" class="link-lvl3-mobile">Pablo Sampaio</a>
+                        </div>
+                        <input type="checkbox" id="checkbox-lvl2-3" class="input-lvl2-mobile">
+                        <label for="checkbox-lvl2-3" class="label-lvl2-mobile">
+                            <a class="strong" class="link-lvl2-mobile">O Trabalho</a>
+                        </label>
+                        <div id="div-lvl3-3">
+                            <a href="/sobre/monografia/web/viewer.html" target="_blank" class="strong"
+                                class="link-lvl3-mobile">Monografia</a>
+                            <a href="/sobre/alison" class="strong" class="link-lvl3-mobile">Defesa</a>
+                        </div>
+                        <input type="checkbox" id="checkbox-lvl2-4" class="input-lvl2-mobile">
+                        <label for="checkbox-lvl2-4" class="label-lvl2-mobile">
+                            <a class="strong" class="link-lvl2-mobile">O Site</a>
+                        </label>
+                        <div id="div-lvl3-4">
+                            <a href="/sobre/alison" class="strong" class="link-lvl3-mobile">Informações</a>
+                            <a href="/sobre/alison" class="strong" class="link-lvl3-mobile">Contato</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="/dados" class="strong">Dados</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <main class="conteudo">
+        <div class="nav-sobre-engloba">
+            <nav id="nav-principal">
+                <img src="/files/images/gota.png" id="img-nav">
+                <ul id="ul-nav-principal">
+                    <li>
+                        <ul class="topico-nav">
+                            <span class="title-topico">Autores</span>
+                            <li>
+                                <a href="/sobre/alison">Alison</a>
+                            </li>
+                            <li>
+                                <a href="/sobre/breno">Breno</a>
+                            </li>
+                            <li>
+                                <a href="/sobre/paulo">Paulo</a>
+                            </li>
+                            <li>
+                                <a href="/sobre/rafael">Rafael</a>
+                            </li>
+                            <li>
+                                <a href="/sobre/samuel">Samuel</a>
+                            </li>
+                            <li>
+                                <a href="/sobre/yuri">Yuri</a>
+                            </li>
+                        </ul>
+                        <ul class="topico-nav">
+                            <span class="title-topico">Orientadores</span>
+                            <li>
+                                <a href="/sobre/elson">Elson Avallone</a>
+                            </li>
+                            <li>
+                                <a href="/sobre/pablo">Pablo Sampaio</a>
+                            </li>
+                        </ul>
+                        <ul class="topico-nav">
+                            <span class="title-topico">O Trabalho</span>
+                            <li>
+                                <a href="/sobre/monografia/web/viewer.html" target="_blank">Monografia</a>
+                            </li>
+                            <li>
+                                <a href="/sobre/alison">Defesa</a>
+                            </li>
+                        </ul>
+                        <ul class="topico-nav">
+                            <span class="title-topico">O Site</span>
+                            <li>
+                                <a href="/sobre/alison">Informações</a>
+                            </li>
+                            <li>
+                                <a href="/sobre/alison">Contato</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="engloba-conteudo">
+            <p id="response"></p>
+            <div id="le-pagina">
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="center">
+            <div id="footer-1">
+                <img src="/files/images/gota.png" alt="Logo Stecken" id="logo-footer">
+                <h3 id="texto-footer">Copyright © 2021 Stecken - Todos os direitos reservados</h3>
+            </div>
+            <div id="redes-sociais">
+                <h4>Contato</h4>
+                <div id="redes-sociais-img">
+                    <a href="https://www.instagram.com/yuri.martinsbr/" target="_blank" id="link">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/yuri.martins.54738" target="_blank">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
