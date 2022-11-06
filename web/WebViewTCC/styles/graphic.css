@@ -1,0 +1,51 @@
+div#control-graphic {
+    margin: 1rem 0 1rem 1rem;
+}
+
+div.panel-body {
+    background-color: white;
+    padding: 0 0.8rem;
+}
+
+.not-active {
+    display: none;
+}
+
+.active {
+    height: 400px;
+    width: 100%;
+}
+
+@media(max-width: 400px){
+    div#le-pagina {
+        padding: 2rem 0.5rem;
+    }
+    div.topic-home {
+        align-self: flex-start;
+    }
+
+    div.engloba-resumo {
+        width: 100%;
+        display: flex;
+    }
+
+    p.aluno-p {
+        width: 100%;
+        align-self: center;
+    }
+
+    div.panel-body {
+        background-color: white;
+        padding: 0 0.8rem;
+    }
+
+    .topic-home h2 {
+        font-size: 1.4rem !important;
+        height: max-content !important;
+        padding: 0 1.5rem;
+    }
+
+    #paulo-title {
+        padding: 0 1.5rem !important;
+    }
+}

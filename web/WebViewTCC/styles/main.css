@@ -1,0 +1,383 @@
+main {
+    width: 100%;
+    display: block;
+}
+.div-image-central{
+    z-index:1;
+    width: 100%;
+    height: 1200px;
+    max-height: 800px;
+    background-image: url(/files/images/homeBackGround.png);
+    background-size: cover;
+    background-position: 0% 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.div-image-central h1{
+    text-align: center;
+    font-family: 'Metropolis-Light', sans-serif !important;
+    font-size: 1.5rem;
+}
+.div-image-central h1.titulo{
+    font-family: 'Metropolis-Bold', sans-serif !important;
+    margin: 0;
+    color: #000;
+    text-align: center;
+}
+#sub-titulo {
+    text-align: center;
+    padding: 0 10rem;
+}
+#engloba-buttons-image{
+    padding-top: 2rem;
+    display: flex;
+    width: 30%;
+    flex-wrap: wrap;
+    
+    align-items: center;
+    justify-content: space-around;
+}
+div.buttonImage {
+    border-color: #ed9912;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    height: 2rem;
+}
+
+a {
+    padding: 0 1rem;
+    color: #000;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s;
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+}
+div.buttonImage > a:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 0rem;
+	z-index: -2;
+}
+
+div.buttonImage > a:before {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0%;
+	height: 100%;
+	background-color: #ed9912;
+	transition: all .3s;
+	border-radius: 0rem;
+	z-index: -1;	
+}
+div.buttonImage:hover{
+    box-shadow: -5px 5px 5px -5px #333;
+}
+
+div.buttonImage > a:hover{
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+
+div.buttonImage > a:hover:before{
+    width: 100%;
+}
+
+.topic-home {
+    border-color: #000;
+    border-style: solid;
+    border-width: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    height: 3rem;
+}
+
+.topic-home h2 {
+    font-size: 2rem;
+
+    padding: 0 2rem;
+    color: black;
+}
+
+.traco-hori{
+    width: 0.8rem;
+    height: 100%;
+    background-color: #000;
+}
+
+.conteudo {
+    z-index:0;
+    width: 100%;
+    height: max-content;
+    max-height: 100%;
+    background-image: url(/files/images/homeBackGroundSemPassaroPrata.png);
+    background-size: cover;
+    background-position: 0% 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 4rem 4rem 4rem;
+}
+
+.engloba{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    padding: 2rem 0 1rem 0;
+}
+
+.integrantes {
+    padding: 3rem 0 0 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows:  1fr;
+}
+
+.integ > img {
+    border-color: #1257ed;
+    border-style: solid;
+    border-width: 2px;
+    max-width: 9rem;
+    max-height: 9rem;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    align-self: center;
+}
+
+.integ {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: max(max-content, 120%);
+}
+
+div.integ h3 {
+    font-family: 'Metropolis-Light', sans-serif !important;
+    margin: 1rem 0 0 0;
+    text-align: center;
+}
+
+.inform{
+    width: 100%;
+}
+
+p.inf{
+    font-family: 'Metropolis-Light', sans-serif !important;
+    margin: 0;
+    padding: 0.5rem 0.5rem;
+    background-color: #EEEEEE;
+    color: #000;
+}
+
+.monografia {
+    border-color: #1257ed !important;
+}
+
+.arrow {
+    margin: 5rem 0 0 0;
+    border-color: #ed9912;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 50% !important;
+    height: max-content !important;
+}
+
+.arrow > a {
+    padding: 0.3rem;
+}
+
+.arrow > a > img {
+    max-width: 1.5rem;
+    max-height: 1.5rem;
+    width: auto;
+    height: auto;
+}
+
+div.monografia > a:before {
+	background-color: #1257ed !important;
+}
+
+div.img-pessoa {
+    padding: 1rem 0 0 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: max-content;
+    height: max-content;
+    justify-content: center;
+}
+
+div.img-pessoa > a:hover{
+    color: #1257ed;
+}
+
+div.img-pessoa > a {
+    padding: 0 0.5rem 0 0;
+}
+
+div.img-pessoa > a > h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+img.pessoa-link-img {
+    position: relative;
+    max-width: 0.8rem;
+    max-height: 0.8rem;
+    width: auto;
+    height: auto;
+    visibility: hidden;
+    border: none !important;
+    z-index: 2;
+    transition: all .3s linear;
+    top: -1rem;
+    right: 0%;
+}
+
+/*Hover na pessoa, aparece o link*/
+div.img-pessoa:hover > a > img.pessoa-link-img {
+    visibility: visible;
+    transform: translateY(0.9rem);
+}
+
+@media(max-width:1080px) {
+    .integ {
+        padding: 1.5rem 3rem 0 3rem;
+    }
+    div.img-pessoa > a {
+        padding: 0;
+    }
+    .integrantes {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows:  repeat(2, 1fr);
+    }
+}
+
+@media(max-width:940px){
+    .div-image-central {
+        background-size:cover;
+        background-position: 50% 50%;
+        background-attachment:unset;
+    }
+    #sub-titulo {
+        padding: 0 8rem;
+    }
+    .div-image-central h1{
+        font-size: 1.3rem;
+    }
+    .pessoas{
+        padding: 0;
+        margin: 0 auto 0 auto;
+        display: block;
+        max-width: 70%;
+        max-height: 70%;
+        width: auto;
+        height: auto;
+    }
+    .engloba-inform{
+        display: block;
+        width: 100%;
+    }
+    .inform{
+        width: 100%;
+        display: block;
+        padding: 0;
+    }
+    .integ {
+        padding: 1.5rem 2rem 0 2rem;
+    }
+    #engloba-buttons-image{
+        width: 40%;
+    }
+}
+@media(max-width:800px){
+    #sub-titulo {
+        padding: 0 5rem;
+    }
+    .div-image-central h1{
+        font-size: 1.2rem;
+    }
+    .pessoas{
+        display: block;
+        max-width: 90%;
+        max-height: 90%;
+        width: auto;
+        height: auto;
+    }
+    #engloba-buttons-image{
+        width: 60%;
+    }
+    .conteudo {
+        padding: 1rem 1rem;
+    }
+    .integ > a > img {
+        max-width: 7rem;
+        max-height: 7rem;
+    }
+    .integrantes {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows:  repeat(3, 1fr);
+    }
+}
+@media(max-width:664px){
+    #sub-titulo {
+        padding: 0 3rem;
+    }
+    .div-image-central h1{
+        font-size: 1rem;
+    }
+    #engloba-buttons-image{
+        width: 90%;
+    }
+    .integrantes {
+        justify-content: center;
+        align-items: center;
+        padding: 0rem 1rem 0 1rem;
+    }
+    .integ {
+        padding: 1.5rem 0 0 0;
+        width: 100%;
+    }
+    .integ > a > img {
+        max-width: 7rem;
+        max-height: 7rem;
+    }
+}
+@media(max-width:500px){
+    .integ > a > img {
+        max-width: 6rem;
+        max-height: 6rem;
+    }
+    .integrantes {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows:  repeat(6, 1fr);
+    }
+}
+
+@media(max-width:400px){
+    .integ {
+        flex-basis: 100%;
+    }
+}
